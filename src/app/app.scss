@@ -11,9 +11,12 @@
 
 .sidenav {
 	width: 250px;
+	border-radius: 0;
 }
 
 .content {
 	flex: 1;
 	background-color: $bg-carbon;
+	gap: 1rem;
+	padding: 2rem;
 }

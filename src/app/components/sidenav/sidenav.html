@@ -1,1 +1,7 @@
-<p>sidenav works!</p>
+@for (group of algorithmConfig | keyvalue; track group.key) {
+<h3>{{ group.key }}</h3>
+
+@for (algorithm of group.value; track algorithm.key) {
+<div>{{ algorithm.title }}</div>
+}
+}
