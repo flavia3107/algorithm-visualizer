@@ -1,3 +1,9 @@
+@use '../styles/color-variables' as *;
+
+.title-row {
+	height: 4.5rem;
+}
+
 .main {
 	flex: 1;
 	align-items: stretch;
@@ -5,9 +11,9 @@
 
 .sidenav {
 	width: 250px;
-	background-color: #f7dcdc;
 }
 
 .content {
 	flex: 1;
+	background-color: $bg-carbon;
 }
