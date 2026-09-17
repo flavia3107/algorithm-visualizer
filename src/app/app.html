@@ -3,30 +3,28 @@
 </div>
 <div class="flex-row main">
 	<div class="flex-column sidenav">
-
+		<app-sidenav />
 	</div>
 	<div class="content flex-column">
 		<div class="flex-row controls">
+			<app-controls />
 
 		</div>
 		<div class="flex-row visualizer-row">
-			<div class="graph"></div>
+			<div class="graph">
+				<app-visualizer />
+			</div>
 			<div class="flex-column algorithm-details">
-				<div class="algorithm-numbers flex-column">
-
-				</div>
-				<div class="pseudocode flex-column">
-
-				</div>
+				<app-details />
 			</div>
 		</div>
 
 		<div class="flex-row data-log">
 			<div class="data-structure">
-
+				<app-data-structure />
 			</div>
 			<div class="execution-log">
-
+				<app-execution-log />
 			</div>
 		</div>
 	</div>
