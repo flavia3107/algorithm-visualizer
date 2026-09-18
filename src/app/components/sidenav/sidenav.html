@@ -4,8 +4,8 @@
 
 	<ul class="flex-column">
 		@for (algorithm of group.value; track algorithm.key) {
-		<li>
-			<span class="material-icons">{{algorithm.icon}}</span>
+		<li class="flex-row middle">
+			<span class="material-icons-outlined" [class.rotate]="algorithm?.rotate">{{algorithm.icon}}</span>
 			{{ algorithm.title }}
 		</li>
 		}

@@ -30,6 +30,14 @@ body {
 	flex-direction: column;
 }
 
+.middle {
+	align-items: center;
+}
+
+.space_between {
+	justify-content: space-between;
+}
+
 .section {
 	padding: 0.5rem;
 	border-radius: 10px;

@@ -1,4 +1,11 @@
-export const ALGORITHM_TREE = {
+export interface AlgorithmItem {
+	key: string;
+	title: string;
+	icon: string;
+	rotate?: boolean;
+}
+
+export const ALGORITHM_TREE: { [key: string]: AlgorithmItem[] } = {
 	sorting: [
 		{
 			key: 'bubble_sort',
@@ -37,12 +44,13 @@ export const ALGORITHM_TREE = {
 		{
 			key: 'bfs',
 			title: 'Breadth-First Search',
-			icon: ''
+			icon: 'share'
 		},
 		{
 			key: 'dfs',
 			title: 'Depth-First Search',
-			icon: ''
+			icon: 'share',
+			rotate: true
 		},
 		{
 			key: 'a*',
