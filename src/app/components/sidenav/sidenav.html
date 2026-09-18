@@ -1,7 +1,11 @@
 @for (group of algorithmConfig | keyvalue; track group.key) {
-<h3>{{ group.key }}</h3>
+<div class="list-section">
+	<p>{{ group.key }}</p>
 
-@for (algorithm of group.value; track algorithm.key) {
-<div>{{ algorithm.title }}</div>
-}
+	<ul class="flex-column">
+		@for (algorithm of group.value; track algorithm.key) {
+		<li>{{ algorithm.title }}</li>
+		}
+	</ul>
+</div>
 }

@@ -1,0 +1,22 @@
+@use '../../../styles/color-variables' as *;
+
+p {
+	text-transform: capitalize;
+	letter-spacing: -0.5px;
+	color: $subtitle-text-color;
+	font-family: serif;
+	margin-bottom: 0.5rem;
+}
+
+li {
+	list-style: none;
+	margin-bottom: 1rem;
+}
+
+.list-section {
+	border-bottom: 1px solid $border-color;
+}
+
+ul {
+	padding-left: 1.5rem;
+}
