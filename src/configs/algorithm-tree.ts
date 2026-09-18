@@ -3,36 +3,36 @@ export const ALGORITHM_TREE = {
 		{
 			key: 'bubble_sort',
 			title: 'Bubble Sort',
-			icon: ''
+			icon: 'compare_arrows'
 		},
 		{
 			key: 'selection_sort',
 			title: 'Selection Sort',
-			icon: ''
+			icon: 'swap_vert'
 		},
 		{
 			key: 'merge_sort',
 			title: 'Merge Sort',
-			icon: ''
+			icon: 'merge'
 		}
 	],
 	searching: [
 		{
 			key: 'binnary_search',
 			title: 'Binnary Search',
-			icon: ''
+			icon: 'search'
 		},
 		{
 			key: 'linear_search',
 			title: 'Linear Search',
-			icon: ''
+			icon: 'search'
 		}
 	],
 	graphs: [
 		{
 			key: 'dijkstra',
 			title: 'Dijkstra\'s Algorithm',
-			icon: ''
+			icon: 'share'
 		},
 		{
 			key: 'bfs',
@@ -40,9 +40,14 @@ export const ALGORITHM_TREE = {
 			icon: ''
 		},
 		{
+			key: 'dfs',
+			title: 'Depth-First Search',
+			icon: ''
+		},
+		{
 			key: 'a*',
 			title: 'A*',
-			icon: ''
+			icon: 'hub'
 		}
 	]
 };

@@ -4,7 +4,10 @@
 
 	<ul class="flex-column">
 		@for (algorithm of group.value; track algorithm.key) {
-		<li>{{ algorithm.title }}</li>
+		<li>
+			<span class="material-icons">{{algorithm.icon}}</span>
+			{{ algorithm.title }}
+		</li>
 		}
 	</ul>
 </div>
