@@ -25,8 +25,8 @@ export const ALGORITHM_TREE: { [key: string]: AlgorithmItem[] } = {
 	],
 	searching: [
 		{
-			key: 'binnary_search',
-			title: 'Binnary Search',
+			key: 'binary_search',
+			title: 'Binary Search',
 			icon: 'search'
 		},
 		{
