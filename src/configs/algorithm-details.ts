@@ -24,8 +24,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 	// ==========================================
 	// SORTING ALGORITHMS
 	// ==========================================
-	'bubble-sort': {
-		id: 'bubble-sort',
+	'bubble_sort': {
+		id: 'bubble_sort',
 		name: 'Bubble Sort',
 		category: 'sorting',
 		visualizationType: 'array',
@@ -50,8 +50,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		]
 	},
 
-	'selection-sort': {
-		id: 'selection-sort',
+	'selection_sort': {
+		id: 'selection_sort',
 		name: 'Selection Sort',
 		category: 'sorting',
 		visualizationType: 'array',
@@ -75,8 +75,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		]
 	},
 
-	'merge-sort': {
-		id: 'merge-sort',
+	'merge_sort': {
+		id: 'merge_sort',
 		name: 'Merge Sort',
 		category: 'sorting',
 		visualizationType: 'array',
@@ -104,8 +104,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 	// ==========================================
 	// SEARCHING ALGORITHMS
 	// ==========================================
-	'linear-search': {
-		id: 'linear-search',
+	'linear_search': {
+		id: 'linear_search',
 		name: 'Linear Search',
 		category: 'searching',
 		visualizationType: 'array',
@@ -130,8 +130,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		]
 	},
 
-	'binary-search': {
-		id: 'binary-search',
+	'binary_search': {
+		id: 'binary_search',
 		name: 'Binary Search',
 		category: 'searching',
 		visualizationType: 'array',
