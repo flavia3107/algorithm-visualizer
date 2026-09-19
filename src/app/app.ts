@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { AlgorithmManager } from './algorithm-manager';
 import { Controls } from './components/controls/controls';
 import { DataStructure } from './components/data-structure/data-structure';
 import { Details } from './components/details/details';
@@ -13,5 +14,7 @@ import { Visualizer } from './components/visualizer/visualizer';
   styleUrl: './app.scss'
 })
 export class App {
+  private _algorithmManager = inject(AlgorithmManager);
+  public activeView = this._algorithmManager.activeAlgorithm;
   protected readonly title = signal('algorithm-visualizer');
 }
