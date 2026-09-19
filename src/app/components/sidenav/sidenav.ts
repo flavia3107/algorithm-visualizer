@@ -1,7 +1,7 @@
 import { KeyValuePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ALGORITHM_TREE } from '../../../configs/algorithm-tree';
-import { AlgorithmManager } from '../../algorithm-manager';
+import { AlgorithmManager } from '../../services/algorithm-manager';
 
 @Component({
   selector: 'app-sidenav',
