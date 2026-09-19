@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { ALGORITHM_CONFIG } from '../configs/algorithm-details';
 import { AlgorithmManager } from './algorithm-manager';
 import { Controls } from './components/controls/controls';
 import { DataStructure } from './components/data-structure/data-structure';
@@ -15,6 +16,9 @@ import { Visualizer } from './components/visualizer/visualizer';
 })
 export class App {
   private _algorithmManager = inject(AlgorithmManager);
-  public activeView = this._algorithmManager.activeAlgorithm;
+  public activeAlgorithm = this._algorithmManager.activeAlgorithm;
+  public activeView = computed(() => ALGORITHM_CONFIG[this.activeAlgorithm()]);
   protected readonly title = signal('algorithm-visualizer');
+
+
 }
