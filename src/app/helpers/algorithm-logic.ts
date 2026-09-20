@@ -126,7 +126,6 @@ export function generateSelectionSortSteps(initialData: number[]): Visualization
 	return steps;
 }
 
-
 export function generateBinarySearchSteps(input: SearchInput): VisualizationStep<SearchInput>[] {
 	const steps: VisualizationStep<SearchInput>[] = [];
 	const { list, target } = input;
@@ -284,4 +283,5 @@ export const ALGORITHM_MAP: Record<string, (data: any) => VisualizationStep[]> =
 	selection_sort: (data: number[]) => generateSelectionSortSteps(data),
 	binary_search: (data: { list: number[]; target: number }) => generateBinarySearchSteps(data),
 	dijkstra: (grid: GridNode[][]) => generateDijkstraSteps(grid),
+	// add the rest of algorithms
 };
