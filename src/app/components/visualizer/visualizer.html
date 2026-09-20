@@ -1,6 +1,6 @@
-<div class="visualizer-container">
-	<div class="narrative">
-		<span class="step-count">
+<div class="stage-wrapper">
+	<div class="status-bar">
+		<span class="step-badge">
 			Step {{ manager.currentStepIndex() + 1 }} / {{ manager.steps().length }}
 		</span>
 		<p class="description">
@@ -8,14 +8,47 @@
 		</p>
 	</div>
 
-	<div class="svg-wrapper">
+	<div class="viewport">
+		@switch (manager.activeView().category) {
+
+		@case ('sorting') {
+		<ng-container *ngTemplateOutlet="array1dTemplate" />
+		}
+		@case ('searching') {
+		<ng-container *ngTemplateOutlet="array1dTemplate" />
+		}
+		@case ('graphs') {
+		<div class="canvas-container">
+			<canvas #gridCanvas width="750" height="300"></canvas>
+		</div>
+		}
+		@default {
+		<div class="empty-state">
+			<p>Select an algorithm to begin visualization.</p>
+		</div>
+		}
+		}
+	</div>
+</div>
+
+<ng-template #array1dTemplate>
+	<div class="svg-container">
 		@if (manager.currentStep(); as step) {
 		<svg viewBox="0 0 800 300" preserveAspectRatio="none">
 			@for (value of arrayData(); track $index) {
-			<rect [attr.x]="$index * barWidth()" [attr.y]="300 - (value * scaleFactor())" [attr.width]="barWidth() - 2"
-				[attr.height]="value * scaleFactor()" [attr.fill]="getBarColor($index, step)" class="bar" />
+			<g>
+				<rect [attr.x]="$index * barWidth()" [attr.y]="300 - (value * scaleFactor())"
+					[attr.width]="barWidth() - 2" [attr.height]="value * scaleFactor()"
+					[attr.fill]="getBarColor($index, step)" class="bar" />
+				@if (barWidth() > 20) {
+				<text [attr.x]="$index * barWidth() + (barWidth() - 2) / 2" [attr.y]="290 - (value * scaleFactor())"
+					text-anchor="middle" fill="#cdd6f4" font-size="11">
+					{{ value }}
+				</text>
+				}
+			</g>
 			}
 		</svg>
 		}
 	</div>
-</div>
+</ng-template>
