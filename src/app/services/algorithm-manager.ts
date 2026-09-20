@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { AlgorithmMetadata, VisualizationStep, VisualizerStrategy } from '../../configs/algorithm-config';
+import { VisualizationStep, VisualizerStrategy } from '../../configs/algorithm-config';
 import { ALGORITHM_CONFIG } from '../../configs/algorithm-details';
 
 @Injectable({
@@ -17,7 +17,6 @@ export class AlgorithmManager {
   readonly steps = signal<VisualizationStep[]>([]);
   readonly currentStepIndex = signal<number>(0);
   readonly isPlaying = signal<boolean>(false);
-  readonly activeAlgorithmKey = this._activeAlgorithm.asReadonly();
   readonly activeStrategy = computed(() => this._strategies.get(this._activeAlgorithm()) ?? null);
 
   readonly currentStep = computed<VisualizationStep | null>(() => {

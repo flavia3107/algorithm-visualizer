@@ -1,1 +1,21 @@
-<p>visualizer works!</p>
+<div class="visualizer-container">
+	<div class="narrative">
+		<span class="step-count">
+			Step {{ manager.currentStepIndex() + 1 }} / {{ manager.steps().length }}
+		</span>
+		<p class="description">
+			{{ manager.currentStep()?.description || 'Ready' }}
+		</p>
+	</div>
+
+	<div class="svg-wrapper">
+		@if (manager.currentStep(); as step) {
+		<svg viewBox="0 0 800 300" preserveAspectRatio="none">
+			@for (value of arrayData(); track $index) {
+			<rect [attr.x]="$index * barWidth()" [attr.y]="300 - (value * scaleFactor())" [attr.width]="barWidth() - 2"
+				[attr.height]="value * scaleFactor()" [attr.fill]="getBarColor($index, step)" class="bar" />
+			}
+		</svg>
+		}
+	</div>
+</div>
