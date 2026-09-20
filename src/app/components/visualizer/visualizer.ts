@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, computed, effect, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, untracked, ViewChild } from '@angular/core';
 import { VisualizationStep } from '../../../configs/algorithm-config';
 import { ALGORITHM_MAP, GridNode } from '../../helpers/algorithm-logic';
 import { AlgorithmManager } from '../../services/algorithm-manager';
@@ -37,16 +37,25 @@ export class Visualizer {
 
   constructor() {
     effect(() => {
-      const activeKey = this.manager.activeView().id;
+      const activeKey = this.manager.activeView()?.id;
       const size = this.manager.currentDataSize();
+
+      if (!activeKey) return;
+
       const algorithmFn = ALGORITHM_MAP[activeKey];
 
       if (algorithmFn) {
         const initialData = this.generateInitialDataFor(activeKey, size);
         const generatedSteps = algorithmFn(initialData);
-        this.manager.pause();
-        this.manager.steps.set(generatedSteps);
-        this.manager.currentStepIndex.set(0);
+        untracked(() => {
+          this.manager.pause();
+          this.manager.steps.set(generatedSteps);
+          this.manager.currentStepIndex.set(0);
+
+          queueMicrotask(() => {
+            this.manager.play();
+          });
+        });
       }
     });
 
@@ -54,7 +63,9 @@ export class Visualizer {
       const category = this.manager.activeView()?.category;
       const step = this.manager.currentStep();
 
-      if (category === 'graphs' && step && this.canvasRef) this.drawCanvasGrid(step.data);
+      if (category === 'graphs' && step && this.canvasRef) {
+        this.drawCanvasGrid(step.data);
+      }
     });
   }
 

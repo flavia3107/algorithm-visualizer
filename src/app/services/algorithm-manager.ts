@@ -96,6 +96,13 @@ export class AlgorithmManager {
     if (this.currentStepIndex() > 0) this.currentStepIndex.update((idx) => idx - 1);
   }
 
+  loadAndPlay(newSteps: VisualizationStep[]): void {
+    this.pause();
+    this.steps.set(newSteps);
+    this.currentStepIndex.set(0);
+    this.play();
+  }
+
   private scheduleNextFrame(): void {
     if (!this.isPlaying()) return;
 
