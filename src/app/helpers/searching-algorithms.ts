@@ -1,6 +1,9 @@
 import { VisualizationStep } from "../../configs/algorithm-config";
-import { SearchInput } from "./algorithm-logic";
 
+interface SearchInput {
+	list: number[];
+	target: number;
+}
 
 export function generateBinarySearchSteps(input: SearchInput): VisualizationStep<SearchInput>[] {
 	const steps: VisualizationStep<SearchInput>[] = [];

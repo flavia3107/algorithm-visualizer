@@ -1,7 +1,8 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, effect, ElementRef, inject, untracked, ViewChild } from '@angular/core';
 import { VisualizationStep } from '../../../configs/algorithm-config';
-import { ALGORITHM_MAP, GridNode } from '../../helpers/algorithm-logic';
+import { ALGORITHM_MAP } from '../../helpers/algorithm-logic';
+import { GridNode } from '../../helpers/graph-algorithms';
 import { AlgorithmManager } from '../../services/algorithm-manager';
 
 @Component({
