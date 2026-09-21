@@ -19,87 +19,51 @@ function cloneGrid(grid: GridNode[][]): GridNode[][] {
 export function generateDijkstraSteps(initialGrid: GridNode[][]): VisualizationStep<GridNode[][]>[] {
 	const steps: VisualizationStep<GridNode[][]>[] = [];
 	const grid = cloneGrid(initialGrid);
-
-	let startNode: GridNode | null = null;
-	let targetNode: GridNode | null = null;
-	const unvisitedNodes: GridNode[] = [];
-
-	// Initialize nodes
-	for (const row of grid) {
-		for (const node of row) {
-			if (node.isStart) {
-				node.distance = 0;
-				startNode = node;
-			}
-			if (node.isTarget) {
-				targetNode = node;
-			}
-			unvisitedNodes.push(node);
-		}
-	}
+	const unvisited = grid.flat();
+	const startNode = unvisited.find((n) => n.isStart);
+	const targetNode = unvisited.find((n) => n.isTarget);
 
 	if (!startNode || !targetNode) return steps;
+	startNode.distance = 0;
 
-	steps.push({
-		type: 'info',
-		data: cloneGrid(grid),
-		description: 'Grid initialized for Dijkstra Search.',
-	});
+	const pushStep = (type: VisualizationStep<GridNode[][]>['type'], description: string) =>
+		steps.push({ type, data: cloneGrid(grid), description });
 
-	while (unvisitedNodes.length > 0) {
-		// Sort unvisited by distance
-		unvisitedNodes.sort((a, b) => a.distance - b.distance);
-		const closestNode = unvisitedNodes.shift()!;
+	pushStep('info', 'Grid initialized for Dijkstra Search.');
 
-		if (closestNode.isWall) continue;
-		if (closestNode.distance === Infinity) {
-			steps.push({
-				type: 'info',
-				data: cloneGrid(grid),
-				description: 'Target is unreachable.',
-			});
+	while (unvisited.length > 0) {
+		unvisited.sort((a, b) => a.distance - b.distance);
+		const curr = unvisited.shift()!;
+
+		if (curr.isWall) continue;
+		if (curr.distance === Infinity) {
+			pushStep('info', 'Target is unreachable.');
 			return steps;
 		}
 
-		closestNode.isVisited = true;
+		curr.isVisited = true;
+		pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
 
-		steps.push({
-			type: 'visit',
-			data: cloneGrid(grid),
-			description: `Visited node at row ${closestNode.row}, col ${closestNode.col}.`,
-		});
-
-		if (closestNode === targetNode) {
-			// Reconstruct shortest path
-			let curr: GridNode | null = closestNode;
-			while (curr) {
-				curr.isPath = true;
-				curr = curr.previousNode;
+		if (curr === targetNode) {
+			for (let p: GridNode | null = curr; p; p = p.previousNode) {
+				p.isPath = true;
 			}
-
-			steps.push({
-				type: 'path-found',
-				data: cloneGrid(grid),
-				description: 'Shortest path found!',
-			});
+			pushStep('path-found', 'Shortest path found!');
 			return steps;
 		}
 
-		// Update unvisited neighbors
-		const neighbors: GridNode[] = [];
-		const { row, col } = closestNode;
-		if (row > 0) neighbors.push(grid[row - 1][col]);
-		if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
-		if (col > 0) neighbors.push(grid[row][col - 1]);
-		if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
+		const neighbors = [
+			grid[curr.row - 1]?.[curr.col],
+			grid[curr.row + 1]?.[curr.col],
+			grid[curr.row]?.[curr.col - 1],
+			grid[curr.row]?.[curr.col + 1],
+		].filter((n): n is GridNode => Boolean(n && !n.isVisited && !n.isWall));
 
 		for (const neighbor of neighbors) {
-			if (!neighbor.isVisited && !neighbor.isWall) {
-				const newDist = closestNode.distance + 1;
-				if (newDist < neighbor.distance) {
-					neighbor.distance = newDist;
-					neighbor.previousNode = closestNode;
-				}
+			const altDist = curr.distance + 1;
+			if (altDist < neighbor.distance) {
+				neighbor.distance = altDist;
+				neighbor.previousNode = curr;
 			}
 		}
 	}
