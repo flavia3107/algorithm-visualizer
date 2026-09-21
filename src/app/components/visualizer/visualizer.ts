@@ -82,7 +82,8 @@ export class Visualizer {
         return arr;
       }
 
-      case 'binary_search': {
+      case 'binary_search':
+      case 'linear_search': {
         const list = Array.from({ length: size }, (_, i) => (i + 1) * 2);
         const target = list[Math.floor(Math.random() * list.length)];
         return { list, target };

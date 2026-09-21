@@ -65,3 +65,41 @@ export function generateBinarySearchSteps(input: SearchInput): VisualizationStep
 
 	return steps;
 }
+
+export function generateLinearSearchSteps(input: SearchInput): VisualizationStep<SearchInput>[] {
+	const steps: VisualizationStep<SearchInput>[] = [];
+	const { list, target } = input;
+
+	steps.push({
+		type: 'info',
+		data: { ...input },
+		description: `Searching for target value: ${target}.`,
+	});
+
+	for (let i = 0; i < list.length; i++) {
+		steps.push({
+			type: 'compare',
+			data: { ...input },
+			activeIndices: [i],
+			description: `Checking index ${i} (${list[i]}).`,
+		});
+
+		if (list[i] === target) {
+			steps.push({
+				type: 'path-found',
+				data: { ...input },
+				completedIndices: [i],
+				description: `Target ${target} found at index ${i}!`,
+			});
+			return steps;
+		}
+	}
+
+	steps.push({
+		type: 'info',
+		data: { ...input },
+		description: `Target ${target} was not found in the array.`,
+	});
+
+	return steps;
+}
