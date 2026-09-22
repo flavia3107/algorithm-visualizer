@@ -184,8 +184,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		]
 	},
 
-	'depth-first-search': {
-		id: 'depth-first-search',
+	'depth_first_search': {
+		id: 'depth_first_search',
 		name: 'Depth-First Search',
 		category: 'graphs',
 		visualizationType: 'graph',

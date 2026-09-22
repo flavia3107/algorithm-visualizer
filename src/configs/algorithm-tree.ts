@@ -47,7 +47,7 @@ export const ALGORITHM_TREE: { [key: string]: AlgorithmItem[] } = {
 			icon: 'share'
 		},
 		{
-			key: 'depth-first-search',
+			key: 'depth_first_search',
 			title: 'Depth-First Search',
 			icon: 'share',
 			rotate: true
