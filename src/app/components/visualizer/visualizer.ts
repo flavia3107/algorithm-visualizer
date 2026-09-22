@@ -89,7 +89,8 @@ export class Visualizer {
         return { list, target };
       }
 
-      case 'dijkstra': {
+      case 'dijkstra':
+      case 'breadth_first_search': {
         const rows = 10;
         const cols = 25;
         const grid: GridNode[][] = [];

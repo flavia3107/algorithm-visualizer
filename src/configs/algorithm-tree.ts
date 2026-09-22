@@ -42,7 +42,7 @@ export const ALGORITHM_TREE: { [key: string]: AlgorithmItem[] } = {
 			icon: 'share'
 		},
 		{
-			key: 'breadth-first-search',
+			key: 'breadth_first_search',
 			title: 'Breadth-First Search',
 			icon: 'share'
 		},

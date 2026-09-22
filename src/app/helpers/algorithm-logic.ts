@@ -1,7 +1,7 @@
 
 
 import { VisualizationStep } from "../../configs/algorithm-config";
-import { GridNode, generateDijkstraSteps } from "./graph-algorithms";
+import { GridNode, generateDijkstraSteps, generateBFSSteps } from "./graph-algorithms";
 import { generateBinarySearchSteps, generateLinearSearchSteps } from "./searching-algorithms";
 import { generateBubbleSortSteps, generateSelectionSortSteps } from "./sorting-algorithms";
 
@@ -13,5 +13,6 @@ export const ALGORITHM_MAP: Record<string, (data: any) => VisualizationStep[]> =
 	linear_search: (data: { list: number[]; target: number }) => generateLinearSearchSteps(data),
 
 	dijkstra: (grid: GridNode[][]) => generateDijkstraSteps(grid),
+	breadth_first_search: (grid: GridNode[][]) => generateBFSSteps(grid),
 	// add the rest of algorithms
 };

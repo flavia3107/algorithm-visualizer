@@ -158,8 +158,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 	// ==========================================
 	// GRAPH ALGORITHMS
 	// ==========================================
-	'breadth-first-search': {
-		id: 'breadth-first-search',
+	'breadth_first_search': {
+		id: 'breadth_first_search',
 		name: 'Breadth-First Search',
 		category: 'graphs',
 		visualizationType: 'graph',
