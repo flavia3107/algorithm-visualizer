@@ -1,105 +1,62 @@
 import { VisualizationStep } from "../../configs/algorithm-config";
 
-interface SearchInput {
+export interface SearchInput {
 	list: number[];
 	target: number;
 }
 
-export function generateBinarySearchSteps(input: SearchInput): VisualizationStep<SearchInput>[] {
+type StepPayload = Partial<VisualizationStep<SearchInput>>;
+
+function runArraySearch(
+	input: SearchInput,
+	execute: (ctx: {
+		list: number[]; target: number; pushStep: (type: VisualizationStep<SearchInput>['type'], description: string, extra?: StepPayload) => void;
+		found: (index: number) => void;
+	}
+	) => void
+): VisualizationStep<SearchInput>[] {
 	const steps: VisualizationStep<SearchInput>[] = [];
 	const { list, target } = input;
-	let low = 0;
-	let high = list.length - 1;
+	const pushStep =
+		(type: VisualizationStep<SearchInput>['type'], description: string, extra: StepPayload = {}) => steps.push({ type, data: { ...input }, description, ...extra, });
+	const found = (index: number) => pushStep('path-found', `Target ${target} found at index ${index}!`, { completedIndices: [index] });
 
-	steps.push({
-		type: 'info',
-		data: { ...input },
-		description: `Searching for target value: ${target}.`,
-	});
+	pushStep('info', `Searching for target value: ${target}.`);
+	execute({ list, target, pushStep, found });
 
-	while (low <= high) {
-		const mid = Math.floor((low + high) / 2);
-
-		steps.push({
-			type: 'compare',
-			data: { ...input },
-			activeIndices: [mid],
-			highlightIndices: [low, high],
-			description: `Checking midpoint index ${mid} (${list[mid]}). Current bounds [${low}, ${high}].`,
-		});
-
-		if (list[mid] === target) {
-			steps.push({
-				type: 'path-found',
-				data: { ...input },
-				completedIndices: [mid],
-				description: `Target ${target} found at index ${mid}!`,
-			});
-			return steps;
-		}
-
-		if (list[mid] < target) {
-			low = mid + 1;
-			steps.push({
-				type: 'info',
-				data: { ...input },
-				highlightIndices: [low, high],
-				description: `${list[mid]} < ${target}. Shrinking range to right half [${low}, ${high}].`,
-			});
-		} else {
-			high = mid - 1;
-			steps.push({
-				type: 'info',
-				data: { ...input },
-				highlightIndices: [low, high],
-				description: `${list[mid]} > ${target}. Shrinking range to left half [${low}, ${high}].`,
-			});
-		}
-	}
-
-	steps.push({
-		type: 'info',
-		data: { ...input },
-		description: `Target ${target} was not found in the array.`,
-	});
-
+	if (steps[steps.length - 1]?.type !== 'path-found') pushStep('info', `Target ${target} was not found in the array.`);
 	return steps;
 }
 
-export function generateLinearSearchSteps(input: SearchInput): VisualizationStep<SearchInput>[] {
-	const steps: VisualizationStep<SearchInput>[] = [];
-	const { list, target } = input;
+export function generateBinarySearchSteps(input: SearchInput): VisualizationStep<SearchInput>[] {
+	return runArraySearch(input, ({ list, target, pushStep, found }) => {
+		let low = 0;
+		let high = list.length - 1;
 
-	steps.push({
-		type: 'info',
-		data: { ...input },
-		description: `Searching for target value: ${target}.`,
-	});
+		while (low <= high) {
+			const mid = Math.floor((low + high) / 2);
+			const val = list[mid];
 
-	for (let i = 0; i < list.length; i++) {
-		steps.push({
-			type: 'compare',
-			data: { ...input },
-			activeIndices: [i],
-			description: `Checking index ${i} (${list[i]}).`,
-		});
+			pushStep('compare', `Checking midpoint index ${mid} (${val}). Current bounds [${low}, ${high}].`, { activeIndices: [mid], highlightIndices: [low, high] });
 
-		if (list[i] === target) {
-			steps.push({
-				type: 'path-found',
-				data: { ...input },
-				completedIndices: [i],
-				description: `Target ${target} found at index ${i}!`,
-			});
-			return steps;
+			if (val === target) return found(mid);
+
+			const isLessThan = val < target;
+			if (isLessThan) low = mid + 1;
+			else high = mid - 1;
+
+			const dir = isLessThan ? 'right' : 'left';
+			const op = isLessThan ? '<' : '>';
+			pushStep('info', `${val} ${op} ${target}. Shrinking range to ${dir} half [${low}, ${high}].`, { highlightIndices: [low, high] });
 		}
-	}
-
-	steps.push({
-		type: 'info',
-		data: { ...input },
-		description: `Target ${target} was not found in the array.`,
 	});
+}
 
-	return steps;
+export function generateLinearSearchSteps(input: SearchInput): VisualizationStep<SearchInput>[] {
+	return runArraySearch(input, ({ list, target, pushStep, found }) => {
+		for (let i = 0; i < list.length; i++) {
+			pushStep('compare', `Checking index ${i} (${list[i]}).`, { activeIndices: [i] });
+			if (list[i] === target) return found(i);
+		}
+	});
 }
