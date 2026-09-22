@@ -91,7 +91,8 @@ export class Visualizer {
 
       case 'dijkstra':
       case 'breadth_first_search':
-      case 'depth_first_search': {
+      case 'depth_first_search':
+      case 'a_star': {
         const rows = 10;
         const cols = 25;
         const grid: GridNode[][] = [];

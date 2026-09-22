@@ -174,3 +174,94 @@ export function generateDFSSteps(initialGrid: GridNode[][]): VisualizationStep<G
 	pushStep('info', 'Target is unreachable.');
 	return steps;
 }
+
+
+function getManhattanDistance(nodeA: GridNode, nodeB: GridNode): number {
+	return Math.abs(nodeA.row - nodeB.row) + Math.abs(nodeA.col - nodeB.col);
+}
+
+export function generateAStarSteps(initialGrid: GridNode[][]): VisualizationStep<GridNode[][]>[] {
+	const steps: VisualizationStep<GridNode[][]>[] = [];
+	const grid = cloneGrid(initialGrid);
+
+	let startNode: GridNode | null = null;
+	let targetNode: GridNode | null = null;
+
+	for (const row of grid) {
+		for (const node of row) {
+			if (node.isStart) startNode = node;
+			if (node.isTarget) targetNode = node;
+		}
+	}
+
+	if (!startNode || !targetNode) return steps;
+
+	const pushStep = (type: VisualizationStep<GridNode[][]>['type'], description: string) =>
+		steps.push({ type, data: cloneGrid(grid), description });
+
+	pushStep('info', 'Grid initialized for A* Search.');
+
+	// gScore (distance from start) initialized to infinity by default on grid nodes
+	startNode.distance = 0;
+
+	// Open set storing active candidates
+	const openSet: GridNode[] = [startNode];
+
+	while (openSet.length > 0) {
+		// Sort open set by fScore (distance + heuristic).
+		// Tie-breaker: prefer nodes with smaller heuristic (closer to target)
+		openSet.sort((a, b) => {
+			const fA = a.distance + getManhattanDistance(a, targetNode!);
+			const fB = b.distance + getManhattanDistance(b, targetNode!);
+			if (fA === fB) {
+				return getManhattanDistance(a, targetNode!) - getManhattanDistance(b, targetNode!);
+			}
+			return fA - fB;
+		});
+
+		const curr = openSet.shift()!;
+
+		if (curr.isWall) continue;
+		if (curr.distance === Infinity) {
+			pushStep('info', 'Target is unreachable.');
+			return steps;
+		}
+
+		curr.isVisited = true;
+		pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
+
+		// Target reached: reconstruct path
+		if (curr === targetNode) {
+			for (let p: GridNode | null = curr; p; p = p.previousNode) {
+				p.isPath = true;
+			}
+			pushStep('path-found', 'Shortest path found using A*!');
+			return steps;
+		}
+
+		// Fetch valid 4-directional neighbors
+		const neighbors = [
+			grid[curr.row - 1]?.[curr.col],
+			grid[curr.row + 1]?.[curr.col],
+			grid[curr.row]?.[curr.col - 1],
+			grid[curr.row]?.[curr.col + 1],
+		].filter((n): n is GridNode => Boolean(n && !n.isVisited && !n.isWall));
+
+		for (const neighbor of neighbors) {
+			const tentativeGScore = curr.distance + 1;
+
+			// Found a better path to the neighbor
+			if (tentativeGScore < neighbor.distance) {
+				neighbor.distance = tentativeGScore;
+				neighbor.previousNode = curr;
+
+				if (!openSet.includes(neighbor)) {
+					openSet.push(neighbor);
+				}
+			}
+		}
+	}
+
+	pushStep('info', 'Target is unreachable.');
+	return steps;
+}

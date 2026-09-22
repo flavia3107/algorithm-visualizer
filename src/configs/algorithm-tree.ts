@@ -53,7 +53,7 @@ export const ALGORITHM_TREE: { [key: string]: AlgorithmItem[] } = {
 			rotate: true
 		},
 		{
-			key: 'a-star',
+			key: 'a_star',
 			title: 'A*',
 			icon: 'hub'
 		}

@@ -236,8 +236,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		]
 	},
 
-	'a-star': {
-		id: 'a-star',
+	'a_star': {
+		id: 'a_star',
 		name: 'A* Search',
 		category: 'graphs',
 		visualizationType: 'graph',
