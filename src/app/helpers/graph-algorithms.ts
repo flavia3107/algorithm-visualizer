@@ -12,256 +12,173 @@ export interface GridNode {
 	previousNode: GridNode | null;
 }
 
-function cloneGrid(grid: GridNode[][]): GridNode[][] {
-	return grid.map((row) => row.map((node) => ({ ...node })));
-}
+const cloneGrid = (grid: GridNode[][]): GridNode[][] =>
+	grid.map((row) => row.map((node) => ({ ...node })));
 
-export function generateDijkstraSteps(initialGrid: GridNode[][]): VisualizationStep<GridNode[][]>[] {
-	const steps: VisualizationStep<GridNode[][]>[] = [];
-	const grid = cloneGrid(initialGrid);
-	const unvisited = grid.flat();
-	const startNode = unvisited.find((n) => n.isStart);
-	const targetNode = unvisited.find((n) => n.isTarget);
+const getManhattanDistance = (a: GridNode, b: GridNode): number =>
+	Math.abs(a.row - b.row) + Math.abs(a.col - b.col);
 
-	if (!startNode || !targetNode) return steps;
-	startNode.distance = 0;
-
-	const pushStep = (type: VisualizationStep<GridNode[][]>['type'], description: string) =>
-		steps.push({ type, data: cloneGrid(grid), description });
-
-	pushStep('info', 'Grid initialized for Dijkstra Search.');
-
-	while (unvisited.length > 0) {
-		unvisited.sort((a, b) => a.distance - b.distance);
-		const curr = unvisited.shift()!;
-
-		if (curr.isWall) continue;
-		if (curr.distance === Infinity) {
-			pushStep('info', 'Target is unreachable.');
-			return steps;
-		}
-
-		curr.isVisited = true;
-		pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
-
-		if (curr === targetNode) {
-			for (let p: GridNode | null = curr; p; p = p.previousNode) {
-				p.isPath = true;
-			}
-			pushStep('path-found', 'Shortest path found!');
-			return steps;
-		}
-
-		const neighbors = [
-			grid[curr.row - 1]?.[curr.col],
-			grid[curr.row + 1]?.[curr.col],
-			grid[curr.row]?.[curr.col - 1],
-			grid[curr.row]?.[curr.col + 1],
-		].filter((n): n is GridNode => Boolean(n && !n.isVisited && !n.isWall));
-
-		for (const neighbor of neighbors) {
-			const altDist = curr.distance + 1;
-			if (altDist < neighbor.distance) {
-				neighbor.distance = altDist;
-				neighbor.previousNode = curr;
-			}
-		}
-	}
-
-	return steps;
-}
-
-export function generateBFSSteps(initialGrid: GridNode[][]): VisualizationStep<GridNode[][]>[] {
-	const steps: VisualizationStep<GridNode[][]>[] = [];
-	const grid = cloneGrid(initialGrid);
+function getEndpoints(grid: GridNode[][]): { startNode: GridNode | null; targetNode: GridNode | null } {
 	let startNode: GridNode | null = null;
 	let targetNode: GridNode | null = null;
-
 	for (const row of grid) {
 		for (const node of row) {
 			if (node.isStart) startNode = node;
 			if (node.isTarget) targetNode = node;
 		}
 	}
+	return { startNode, targetNode };
+}
+
+function getNeighbors(grid: GridNode[][], node: GridNode): GridNode[] {
+	const { row, col } = node;
+	return [
+		grid[row - 1]?.[col],
+		grid[row + 1]?.[col],
+		grid[row]?.[col - 1],
+		grid[row]?.[col + 1],
+	].filter((n): n is GridNode => Boolean(n && !n.isVisited && !n.isWall));
+}
+
+function runSearchAlgorithm(
+	initialGrid: GridNode[][],
+	algoName: string,
+	executeSearch: (
+		ctx: {
+			grid: GridNode[][];
+			startNode: GridNode;
+			targetNode: GridNode;
+			pushStep: (type: VisualizationStep<GridNode[][]>['type'], desc: string) => void;
+			markPath: (target: GridNode, msg?: string) => void;
+		}
+	) => void
+): VisualizationStep<GridNode[][]>[] {
+	const steps: VisualizationStep<GridNode[][]>[] = [];
+	const grid = cloneGrid(initialGrid);
+	const { startNode, targetNode } = getEndpoints(grid);
 
 	if (!startNode || !targetNode) return steps;
 
 	const pushStep = (type: VisualizationStep<GridNode[][]>['type'], description: string) =>
 		steps.push({ type, data: cloneGrid(grid), description });
 
-	pushStep('info', 'Grid initialized for Breadth-First Search.');
-
-	const queue: GridNode[] = [];
-	startNode.isVisited = true;
-	queue.push(startNode);
-
-	while (queue.length > 0) {
-		const curr = queue.shift()!;
-
-		pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
-		if (curr === targetNode) {
-			for (let p: GridNode | null = curr; p; p = p.previousNode) p.isPath = true;
-			pushStep('path-found', 'Shortest path found!');
-			return steps;
+	const markPath = (curr: GridNode, successMsg = 'Shortest path found!') => {
+		for (let p: GridNode | null = curr; p; p = p.previousNode) {
+			p.isPath = true;
 		}
+		pushStep('path-found', successMsg);
+	};
 
-		const neighbors = [
-			grid[curr.row - 1]?.[curr.col],
-			grid[curr.row + 1]?.[curr.col],
-			grid[curr.row]?.[curr.col - 1],
-			grid[curr.row]?.[curr.col + 1],
-		].filter((n): n is GridNode => Boolean(n && !n.isVisited && !n.isWall));
+	pushStep('info', `Grid initialized for ${algoName}.`);
+	executeSearch({ grid, startNode, targetNode, pushStep, markPath });
 
-		for (const neighbor of neighbors) {
-			neighbor.isVisited = true;
-			neighbor.previousNode = curr;
-			queue.push(neighbor);
-		}
+	if (steps[steps.length - 1]?.type !== 'path-found') {
+		pushStep('info', 'Target is unreachable.');
 	}
 
-	pushStep('info', 'Target is unreachable.');
 	return steps;
 }
 
-export function generateDFSSteps(initialGrid: GridNode[][]): VisualizationStep<GridNode[][]>[] {
-	const steps: VisualizationStep<GridNode[][]>[] = [];
-	const grid = cloneGrid(initialGrid);
-	let startNode: GridNode | null = null;
-	let targetNode: GridNode | null = null;
+export function generateDijkstraSteps(grid: GridNode[][]) {
+	return runSearchAlgorithm(grid, 'Dijkstra Search', ({ grid, startNode, targetNode, pushStep, markPath }) => {
+		startNode.distance = 0;
+		const unvisited = grid.flat();
 
-	for (const row of grid) {
-		for (const node of row) {
-			if (node.isStart) startNode = node;
-			if (node.isTarget) targetNode = node;
-		}
-	}
+		while (unvisited.length > 0) {
+			unvisited.sort((a, b) => a.distance - b.distance);
+			const curr = unvisited.shift()!;
 
-	if (!startNode || !targetNode) return steps;
+			if (curr.isWall) continue;
+			if (curr.distance === Infinity) return;
 
-	const pushStep = (type: VisualizationStep<GridNode[][]>['type'], description: string) =>
-		steps.push({ type, data: cloneGrid(grid), description });
-	pushStep('info', 'Grid initialized for Depth-First Search.');
+			curr.isVisited = true;
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
 
-	const stack: GridNode[] = [startNode];
-	while (stack.length > 0) {
-		const curr = stack.pop()!;
+			if (curr === targetNode) return markPath(curr);
 
-		if (curr.isVisited) continue;
-		if (curr.isWall) continue;
-
-		curr.isVisited = true;
-		pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
-
-		if (curr === targetNode) {
-			for (let p: GridNode | null = curr; p; p = p.previousNode) p.isPath = true;
-			pushStep('path-found', 'Path found (DFS does not guarantee shortest path)!');
-			return steps;
-		}
-
-		const neighbors = [
-			grid[curr.row - 1]?.[curr.col],
-			grid[curr.row + 1]?.[curr.col],
-			grid[curr.row]?.[curr.col - 1],
-			grid[curr.row]?.[curr.col + 1],
-		].filter((n): n is GridNode => Boolean(n && !n.isVisited && !n.isWall));
-
-		for (const neighbor of neighbors) {
-			neighbor.previousNode = curr;
-			stack.push(neighbor);
-		}
-	}
-
-	pushStep('info', 'Target is unreachable.');
-	return steps;
-}
-
-
-function getManhattanDistance(nodeA: GridNode, nodeB: GridNode): number {
-	return Math.abs(nodeA.row - nodeB.row) + Math.abs(nodeA.col - nodeB.col);
-}
-
-export function generateAStarSteps(initialGrid: GridNode[][]): VisualizationStep<GridNode[][]>[] {
-	const steps: VisualizationStep<GridNode[][]>[] = [];
-	const grid = cloneGrid(initialGrid);
-
-	let startNode: GridNode | null = null;
-	let targetNode: GridNode | null = null;
-
-	for (const row of grid) {
-		for (const node of row) {
-			if (node.isStart) startNode = node;
-			if (node.isTarget) targetNode = node;
-		}
-	}
-
-	if (!startNode || !targetNode) return steps;
-
-	const pushStep = (type: VisualizationStep<GridNode[][]>['type'], description: string) =>
-		steps.push({ type, data: cloneGrid(grid), description });
-
-	pushStep('info', 'Grid initialized for A* Search.');
-
-	// gScore (distance from start) initialized to infinity by default on grid nodes
-	startNode.distance = 0;
-
-	// Open set storing active candidates
-	const openSet: GridNode[] = [startNode];
-
-	while (openSet.length > 0) {
-		// Sort open set by fScore (distance + heuristic).
-		// Tie-breaker: prefer nodes with smaller heuristic (closer to target)
-		openSet.sort((a, b) => {
-			const fA = a.distance + getManhattanDistance(a, targetNode!);
-			const fB = b.distance + getManhattanDistance(b, targetNode!);
-			if (fA === fB) {
-				return getManhattanDistance(a, targetNode!) - getManhattanDistance(b, targetNode!);
-			}
-			return fA - fB;
-		});
-
-		const curr = openSet.shift()!;
-
-		if (curr.isWall) continue;
-		if (curr.distance === Infinity) {
-			pushStep('info', 'Target is unreachable.');
-			return steps;
-		}
-
-		curr.isVisited = true;
-		pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
-
-		// Target reached: reconstruct path
-		if (curr === targetNode) {
-			for (let p: GridNode | null = curr; p; p = p.previousNode) {
-				p.isPath = true;
-			}
-			pushStep('path-found', 'Shortest path found using A*!');
-			return steps;
-		}
-
-		// Fetch valid 4-directional neighbors
-		const neighbors = [
-			grid[curr.row - 1]?.[curr.col],
-			grid[curr.row + 1]?.[curr.col],
-			grid[curr.row]?.[curr.col - 1],
-			grid[curr.row]?.[curr.col + 1],
-		].filter((n): n is GridNode => Boolean(n && !n.isVisited && !n.isWall));
-
-		for (const neighbor of neighbors) {
-			const tentativeGScore = curr.distance + 1;
-
-			// Found a better path to the neighbor
-			if (tentativeGScore < neighbor.distance) {
-				neighbor.distance = tentativeGScore;
-				neighbor.previousNode = curr;
-
-				if (!openSet.includes(neighbor)) {
-					openSet.push(neighbor);
+			for (const neighbor of getNeighbors(grid, curr)) {
+				const altDist = curr.distance + 1;
+				if (altDist < neighbor.distance) {
+					neighbor.distance = altDist;
+					neighbor.previousNode = curr;
 				}
 			}
 		}
-	}
+	});
+}
 
-	pushStep('info', 'Target is unreachable.');
-	return steps;
+export function generateBFSSteps(grid: GridNode[][]) {
+	return runSearchAlgorithm(grid, 'Breadth-First Search', ({ grid, startNode, targetNode, pushStep, markPath }) => {
+		const queue: GridNode[] = [startNode];
+		startNode.isVisited = true;
+
+		while (queue.length > 0) {
+			const curr = queue.shift()!;
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
+
+			if (curr === targetNode) return markPath(curr);
+
+			for (const neighbor of getNeighbors(grid, curr)) {
+				neighbor.isVisited = true;
+				neighbor.previousNode = curr;
+				queue.push(neighbor);
+			}
+		}
+	});
+}
+
+export function generateDFSSteps(grid: GridNode[][]) {
+	return runSearchAlgorithm(grid, 'Depth-First Search', ({ grid, startNode, targetNode, pushStep, markPath }) => {
+		const stack: GridNode[] = [startNode];
+
+		while (stack.length > 0) {
+			const curr = stack.pop()!;
+			if (curr.isVisited || curr.isWall) continue;
+
+			curr.isVisited = true;
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
+
+			if (curr === targetNode) return markPath(curr, 'Path found (DFS does not guarantee shortest path)!');
+
+			for (const neighbor of getNeighbors(grid, curr)) {
+				neighbor.previousNode = curr;
+				stack.push(neighbor);
+			}
+		}
+	});
+}
+
+export function generateAStarSteps(grid: GridNode[][]) {
+	return runSearchAlgorithm(grid, 'A* Search', ({ grid, startNode, targetNode, pushStep, markPath }) => {
+		startNode.distance = 0;
+		const openSet: GridNode[] = [startNode];
+
+		while (openSet.length > 0) {
+			openSet.sort((a, b) => {
+				const fA = a.distance + getManhattanDistance(a, targetNode);
+				const fB = b.distance + getManhattanDistance(b, targetNode);
+				return fA === fB
+					? getManhattanDistance(a, targetNode) - getManhattanDistance(b, targetNode)
+					: fA - fB;
+			});
+
+			const curr = openSet.shift()!;
+			if (curr.isWall) continue;
+			if (curr.distance === Infinity) return;
+
+			curr.isVisited = true;
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
+
+			if (curr === targetNode) return markPath(curr, 'Shortest path found using A*!');
+
+			for (const neighbor of getNeighbors(grid, curr)) {
+				const tentativeGScore = curr.distance + 1;
+				if (tentativeGScore < neighbor.distance) {
+					neighbor.distance = tentativeGScore;
+					neighbor.previousNode = curr;
+					if (!openSet.includes(neighbor)) openSet.push(neighbor);
+				}
+			}
+		}
+	});
 }
