@@ -122,3 +122,55 @@ export function generateBFSSteps(initialGrid: GridNode[][]): VisualizationStep<G
 	pushStep('info', 'Target is unreachable.');
 	return steps;
 }
+
+export function generateDFSSteps(initialGrid: GridNode[][]): VisualizationStep<GridNode[][]>[] {
+	const steps: VisualizationStep<GridNode[][]>[] = [];
+	const grid = cloneGrid(initialGrid);
+	let startNode: GridNode | null = null;
+	let targetNode: GridNode | null = null;
+
+	for (const row of grid) {
+		for (const node of row) {
+			if (node.isStart) startNode = node;
+			if (node.isTarget) targetNode = node;
+		}
+	}
+
+	if (!startNode || !targetNode) return steps;
+
+	const pushStep = (type: VisualizationStep<GridNode[][]>['type'], description: string) =>
+		steps.push({ type, data: cloneGrid(grid), description });
+	pushStep('info', 'Grid initialized for Depth-First Search.');
+
+	const stack: GridNode[] = [startNode];
+	while (stack.length > 0) {
+		const curr = stack.pop()!;
+
+		if (curr.isVisited) continue;
+		if (curr.isWall) continue;
+
+		curr.isVisited = true;
+		pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
+
+		if (curr === targetNode) {
+			for (let p: GridNode | null = curr; p; p = p.previousNode) p.isPath = true;
+			pushStep('path-found', 'Path found (DFS does not guarantee shortest path)!');
+			return steps;
+		}
+
+		const neighbors = [
+			grid[curr.row - 1]?.[curr.col],
+			grid[curr.row + 1]?.[curr.col],
+			grid[curr.row]?.[curr.col - 1],
+			grid[curr.row]?.[curr.col + 1],
+		].filter((n): n is GridNode => Boolean(n && !n.isVisited && !n.isWall));
+
+		for (const neighbor of neighbors) {
+			neighbor.previousNode = curr;
+			stack.push(neighbor);
+		}
+	}
+
+	pushStep('info', 'Target is unreachable.');
+	return steps;
+}
