@@ -73,7 +73,8 @@ export class Visualizer {
   private generateInitialDataFor(algoKey: string, size: number): any {
     switch (algoKey) {
       case 'bubble_sort':
-      case 'selection_sort': {
+      case 'selection_sort':
+      case 'merge_sort': {
         const arr = Array.from({ length: size }, (_, i) => i + 1);
         for (let i = arr.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
