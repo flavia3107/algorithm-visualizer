@@ -1,226 +1,80 @@
 import { VisualizationStep } from "../../configs/algorithm-config";
 
-export function generateBubbleSortSteps(initialData: number[]): VisualizationStep<number[]>[] {
-	const steps: VisualizationStep<number[]>[] = [];
-	const arr = [...initialData];
-	const n = arr.length;
-	const completedIndices: number[] = [];
+const range = (len: number, start = 0) => Array.from({ length: len }, (_, i) => start + i);
 
-	steps.push({
-		type: 'info',
-		data: [...arr],
-		description: 'Starting array state ready for Bubble Sort.',
-	});
+function createRunner(arr: number[], name: string) {
+	const steps: VisualizationStep<number[]>[] = [{ type: 'info', data: [...arr], description: `Starting state for ${name}.` }];
+	const step = (type: any, desc: string, extra: Partial<VisualizationStep<number[]>> = {}) =>
+		steps.push({ type, data: [...arr], description: desc, ...extra });
+
+	return {
+		step,
+		finish: (c: number[]) => (step('mark-sorted', `${name} complete!`, { completedIndices: c }), steps)
+	};
+}
+
+export function generateBubbleSortSteps(initialData: number[]): VisualizationStep<number[]>[] {
+	const arr = [...initialData], n = arr.length, c: number[] = [];
+	const { step, finish } = createRunner(arr, 'Bubble Sort');
 
 	for (let i = 0; i < n - 1; i++) {
 		for (let j = 0; j < n - i - 1; j++) {
-			steps.push({
-				type: 'compare',
-				data: [...arr],
-				activeIndices: [j, j + 1],
-				completedIndices: [...completedIndices],
-				description: `Comparing index ${j} (${arr[j]}) and ${j + 1} (${arr[j + 1]}).`,
-			});
-
+			step('compare', `Comparing index ${j} (${arr[j]}) and ${j + 1} (${arr[j + 1]}).`, { activeIndices: [j, j + 1], completedIndices: [...c] });
 			if (arr[j] > arr[j + 1]) {
 				[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-
-				steps.push({
-					type: 'swap',
-					data: [...arr],
-					highlightIndices: [j, j + 1],
-					completedIndices: [...completedIndices],
-					description: `Swapped elements at index ${j} and ${j + 1}.`,
-				});
+				step('swap', `Swapped index ${j} and ${j + 1}.`, { highlightIndices: [j, j + 1], completedIndices: [...c] });
 			}
 		}
-		completedIndices.push(n - 1 - i);
+		c.push(n - 1 - i);
 	}
-	completedIndices.push(0);
-
-	steps.push({
-		type: 'mark-sorted',
-		data: [...arr],
-		completedIndices: [...completedIndices],
-		description: 'Bubble Sort complete! Array is fully sorted.',
-	});
-
-	return steps;
+	return finish([...c, 0]);
 }
 
 export function generateSelectionSortSteps(initialData: number[]): VisualizationStep<number[]>[] {
-	const steps: VisualizationStep<number[]>[] = [];
-	const arr = [...initialData];
-	const n = arr.length;
-	const completedIndices: number[] = [];
-
-	steps.push({
-		type: 'info',
-		data: [...arr],
-		description: 'Starting array state ready for Selection Sort.',
-	});
+	const arr = [...initialData], n = arr.length, c: number[] = [];
+	const { step, finish } = createRunner(arr, 'Selection Sort');
 
 	for (let i = 0; i < n; i++) {
-		let minIdx = i;
-
+		let min = i;
 		for (let j = i + 1; j < n; j++) {
-			steps.push({
-				type: 'compare',
-				data: [...arr],
-				activeIndices: [j],
-				highlightIndices: [minIdx],
-				completedIndices: [...completedIndices],
-				description: `Comparing index ${j} (${arr[j]}) with current min index ${minIdx} (${arr[minIdx]}).`,
-			});
-
-			if (arr[j] < arr[minIdx]) {
-				minIdx = j;
-			}
+			step('compare', `Comparing index ${j} (${arr[j]}) with min index ${min} (${arr[min]}).`, { activeIndices: [j], highlightIndices: [min], completedIndices: [...c] });
+			if (arr[j] < arr[min]) min = j;
 		}
-
-		if (minIdx !== i) {
-			[arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
-
-			steps.push({
-				type: 'swap',
-				data: [...arr],
-				highlightIndices: [i, minIdx],
-				completedIndices: [...completedIndices],
-				description: `Swapped index ${i} with new minimum value at index ${minIdx}.`,
-			});
+		if (min !== i) {
+			[arr[i], arr[min]] = [arr[min], arr[i]];
+			step('swap', `Swapped index ${i} with min value at index ${min}.`, { highlightIndices: [i, min], completedIndices: [...c] });
 		}
-
-		completedIndices.push(i);
+		c.push(i);
 	}
-
-	steps.push({
-		type: 'mark-sorted',
-		data: [...arr],
-		completedIndices: [...completedIndices],
-		description: 'Selection Sort complete!',
-	});
-
-	return steps;
+	return finish(c);
 }
 
 export function generateMergeSortSteps(initialData: number[]): VisualizationStep<number[]>[] {
-	const steps: VisualizationStep<number[]>[] = [];
 	const arr = [...initialData];
+	const { step, finish } = createRunner(arr, 'Merge Sort');
 
-	steps.push({
-		type: 'info',
-		data: [...arr],
-		description: 'Starting array state ready for Merge Sort.',
-	});
+	function mergeSort(l: number, r: number) {
+		if (l >= r) return;
+		const m = (l + r) >> 1;
+		step('compare', `Splitting range [${l}..${r}]`, { activeIndices: range(m - l + 1, l), highlightIndices: range(r - m, m + 1) });
+		mergeSort(l, m);
+		mergeSort(m + 1, r);
 
-	function mergeSort(left: number, right: number) {
-		if (left >= right) return;
+		const left = arr.slice(l, m + 1), right = arr.slice(m + 1, r + 1);
+		let i = 0, j = 0, k = l;
 
-		const mid = Math.floor((left + right) / 2);
+		step('info', `Merging ranges [${l}..${m}] and [${m + 1}..${r}]`, { highlightIndices: range(r - l + 1, l) });
 
-		// Highlight split ranges
-		steps.push({
-			type: 'compare',
-			data: [...arr],
-			activeIndices: Array.from({ length: mid - left + 1 }, (_, k) => left + k),
-			highlightIndices: Array.from({ length: right - mid }, (_, k) => mid + 1 + k),
-			description: `Splitting range [${left}..${right}] into left sub-array [${left}..${mid}] and right sub-array [${mid + 1}..${right}].`,
-		});
-
-		// Recursively divide
-		mergeSort(left, mid);
-		mergeSort(mid + 1, right);
-
-		// Merge phase
-		merge(left, mid, right);
-	}
-
-	function merge(left: number, mid: number, right: number) {
-		const leftArr = arr.slice(left, mid + 1);
-		const rightArr = arr.slice(mid + 1, right + 1);
-
-		let i = 0;
-		let j = 0;
-		let k = left;
-
-		steps.push({
-			type: 'info',
-			data: [...arr],
-			highlightIndices: Array.from({ length: right - left + 1 }, (_, idx) => left + idx),
-			description: `Merging sorted sub-arrays [${left}..${mid}] and [${mid + 1}..${right}].`,
-		});
-
-		while (i < leftArr.length && j < rightArr.length) {
-			const leftIdx = left + i;
-			const rightIdx = mid + 1 + j;
-
-			steps.push({
-				type: 'compare',
-				data: [...arr],
-				activeIndices: [leftIdx],
-				highlightIndices: [rightIdx],
-				description: `Comparing elements from left sub-array (${leftArr[i]}) and right sub-array (${rightArr[j]}).`,
-			});
-
-			if (leftArr[i] <= rightArr[j]) {
-				arr[k] = leftArr[i];
-				i++;
+		while (i < left.length || j < right.length) {
+			if (j >= right.length || (i < left.length && left[i] <= right[j])) {
+				arr[k] = left[i++];
 			} else {
-				arr[k] = rightArr[j];
-				j++;
+				arr[k] = right[j++];
 			}
-
-			steps.push({
-				type: 'swap',
-				data: [...arr],
-				highlightIndices: [k],
-				description: `Placed ${arr[k]} into position ${k}.`,
-			});
-
-			k++;
-		}
-
-		// Copy remaining elements of leftArr, if any
-		while (i < leftArr.length) {
-			arr[k] = leftArr[i];
-
-			steps.push({
-				type: 'swap',
-				data: [...arr],
-				highlightIndices: [k],
-				description: `Placed remaining left sub-array element ${arr[k]} into position ${k}.`,
-			});
-
-			i++;
-			k++;
-		}
-
-		// Copy remaining elements of rightArr, if any
-		while (j < rightArr.length) {
-			arr[k] = rightArr[j];
-
-			steps.push({
-				type: 'swap',
-				data: [...arr],
-				highlightIndices: [k],
-				description: `Placed remaining right sub-array element ${arr[k]} into position ${k}.`,
-			});
-
-			j++;
-			k++;
+			step('swap', `Placed ${arr[k]} at position ${k}.`, { highlightIndices: [k++] });
 		}
 	}
 
 	mergeSort(0, arr.length - 1);
-
-	const completedIndices = arr.map((_, idx) => idx);
-
-	steps.push({
-		type: 'mark-sorted',
-		data: [...arr],
-		completedIndices,
-		description: 'Merge Sort complete!',
-	});
-
-	return steps;
+	return finish(range(arr.length));
 }
