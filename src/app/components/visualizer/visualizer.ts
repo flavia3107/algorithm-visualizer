@@ -46,7 +46,7 @@ export class Visualizer {
       const algorithmFn = ALGORITHM_MAP[activeKey];
 
       if (algorithmFn) {
-        const initialData = this.generateInitialDataFor(activeKey, size);
+        const initialData = this.manager.generateInitialDataFor(activeKey, size);
         const generatedSteps = algorithmFn(initialData);
         untracked(() => {
           this.manager.pause();
@@ -70,58 +70,7 @@ export class Visualizer {
     });
   }
 
-  private generateInitialDataFor(algoKey: string, size: number): any {
-    switch (algoKey) {
-      case 'bubble_sort':
-      case 'selection_sort':
-      case 'merge_sort': {
-        const arr = Array.from({ length: size }, (_, i) => i + 1);
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
-      }
 
-      case 'binary_search':
-      case 'linear_search': {
-        const list = Array.from({ length: size }, (_, i) => (i + 1) * 2);
-        const target = list[Math.floor(Math.random() * list.length)];
-        return { list, target };
-      }
-
-      case 'dijkstra':
-      case 'breadth_first_search':
-      case 'depth_first_search':
-      case 'a_star': {
-        const rows = 10;
-        const cols = 25;
-        const grid: GridNode[][] = [];
-
-        for (let r = 0; r < rows; r++) {
-          const row: GridNode[] = [];
-          for (let c = 0; c < cols; c++) {
-            row.push({
-              row: r,
-              col: c,
-              isStart: r === 2 && c === 2,
-              isTarget: r === 7 && c === 22,
-              isWall: Math.random() < 0.2 && !(r === 2 && c === 2) && !(r === 7 && c === 22),
-              isVisited: false,
-              isPath: false,
-              distance: Infinity,
-              previousNode: null,
-            });
-          }
-          grid.push(row);
-        }
-        return grid;
-      }
-
-      default:
-        return [];
-    }
-  }
 
   getBarColor(index: number, step: VisualizationStep): string {
     if (step.completedIndices?.includes(index)) return '#a6e3a1';
