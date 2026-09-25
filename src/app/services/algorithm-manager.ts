@@ -9,31 +9,28 @@ export class AlgorithmManager {
   private _activeAlgorithm = signal<string>('bubble_sort');
   private _strategies = new Map<string, VisualizerStrategy>();
   private _timerId: ReturnType<typeof setTimeout> | null = null;
-
   public activeView = computed(() => ALGORITHM_CONFIG[this._activeAlgorithm()]);
-  public logSteps = computed<number[]>(() => {
-    const step = this.currentStep();
-    if (!step) return [];
-    if (Array.isArray(step.data)) return step.data;
-    if (step.data && Array.isArray(step.data.list)) return step.data.list;
-    return [];
-  });
+
   readonly currentDataSize = signal<number>(20);
   readonly speedMs = signal<number>(100);
   readonly steps = signal<VisualizationStep[]>([]);
   readonly currentStepIndex = signal<number>(0);
   readonly isPlaying = signal<boolean>(false);
-  readonly activeStrategy = computed(() => this._strategies.get(this._activeAlgorithm()) ?? null);
 
+  readonly activeStrategy = computed(() => this._strategies.get(this._activeAlgorithm()) ?? null);
   readonly currentStep = computed<VisualizationStep | null>(() => {
     const s = this.steps();
     const idx = this.currentStepIndex();
     return s.length > 0 && idx < s.length ? s[idx] : null;
   });
-
   readonly isCompleted = computed(() => {
     const s = this.steps();
     return s.length > 0 && this.currentStepIndex() === s.length - 1;
+  });
+
+  public logSteps = computed<number[]>(() => {
+    const data = this.currentStep()?.data;
+    return Array.isArray(data) ? data : data?.list ?? [];
   });
 
   public updateActiveAlgorithm(currentAlgorthm: string) {
@@ -58,9 +55,10 @@ export class AlgorithmManager {
     if (!strategy) return;
 
     const initialData = strategy.generateInitialData(this.currentDataSize());
-    const generatedSteps = strategy.buildSteps(initialData);
+    const rawSteps = strategy.buildSteps(initialData);
 
-    this.steps.set(generatedSteps);
+    const desc = rawSteps[0]?.description, type = rawSteps[0]?.type;
+    this.steps.set(rawSteps.map((s) => ({ ...s, description: desc, type })));
     this.currentStepIndex.set(0);
   }
 
@@ -104,7 +102,8 @@ export class AlgorithmManager {
 
   loadAndPlay(newSteps: VisualizationStep[]): void {
     this.pause();
-    this.steps.set(newSteps);
+    const desc = newSteps[0]?.description, type = newSteps[0]?.type;
+    this.steps.set(newSteps.map((s) => ({ ...s, description: desc, type })));
     this.currentStepIndex.set(0);
     this.play();
   }

@@ -9,5 +9,5 @@ import { AlgorithmManager } from '../../services/algorithm-manager';
 })
 export class ExecutionLog {
   private _manager = inject(AlgorithmManager);
-  readonly steps = this._manager.logSteps;
+  readonly steps = this._manager.steps;
 }
