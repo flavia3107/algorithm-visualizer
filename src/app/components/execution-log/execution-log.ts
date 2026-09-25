@@ -10,4 +10,5 @@ import { AlgorithmManager } from '../../services/algorithm-manager';
 export class ExecutionLog {
   private _manager = inject(AlgorithmManager);
   readonly steps = this._manager.steps;
+  readonly currentStepIndex = this._manager.currentStepIndex;
 }
