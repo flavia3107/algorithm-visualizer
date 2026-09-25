@@ -11,7 +11,13 @@ export class AlgorithmManager {
   private _timerId: ReturnType<typeof setTimeout> | null = null;
 
   public activeView = computed(() => ALGORITHM_CONFIG[this._activeAlgorithm()]);
-
+  public logSteps = computed<number[]>(() => {
+    const step = this.currentStep();
+    if (!step) return [];
+    if (Array.isArray(step.data)) return step.data;
+    if (step.data && Array.isArray(step.data.list)) return step.data.list;
+    return [];
+  });
   readonly currentDataSize = signal<number>(20);
   readonly speedMs = signal<number>(100);
   readonly steps = signal<VisualizationStep[]>([]);

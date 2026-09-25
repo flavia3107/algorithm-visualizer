@@ -13,16 +13,10 @@ import { AlgorithmManager } from '../../services/algorithm-manager';
 })
 export class Visualizer {
   readonly manager = inject(AlgorithmManager);
-
+  readonly arrayData = this.manager.logSteps;
   @ViewChild('gridCanvas') canvasRef?: ElementRef<HTMLCanvasElement>;
 
-  readonly arrayData = computed<number[]>(() => {
-    const step = this.manager.currentStep();
-    if (!step) return [];
-    if (Array.isArray(step.data)) return step.data;
-    if (step.data && Array.isArray(step.data.list)) return step.data.list;
-    return [];
-  });
+
 
   readonly barWidth = computed(() => {
     const data = this.arrayData();
