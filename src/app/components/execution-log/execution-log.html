@@ -1,7 +1,6 @@
-<p>execution-log works!</p>
 @for(step of steps(); track step) {
-@if($index <= currentStepIndex() + 1) { <p [class.active]="$index === currentStepIndex() + 1">
-	{{step.description}}
-	</p>
-	}
-	}
+@if($index <= currentStepIndex() + 1) { 
+@let isActive=$index===(currentStepIndex() + 1); 
+<p [class.active]="isActive">{{step.description}}</p>
+}
+}
