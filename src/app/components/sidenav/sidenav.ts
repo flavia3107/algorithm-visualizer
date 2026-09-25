@@ -12,6 +12,7 @@ import { AlgorithmManager } from '../../services/algorithm-manager';
 export class Sidenav {
   private _algorithmManager = inject(AlgorithmManager);
   readonly algorithmConfig = ALGORITHM_TREE;
+  readonly activeView = this._algorithmManager.activeView;
 
   public updateView(newView: string): void {
     this._algorithmManager.updateActiveAlgorithm(newView);

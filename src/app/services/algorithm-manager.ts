@@ -1,7 +1,6 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { VisualizationStep, VisualizerStrategy } from '../../configs/algorithm-config';
 import { ALGORITHM_CONFIG } from '../../configs/algorithm-details';
-import { GridNode } from '../helpers/graph-algorithms';
 
 @Injectable({
   providedIn: 'root',

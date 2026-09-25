@@ -1,12 +1,17 @@
 @for (group of algorithmConfig | keyvalue; track group.key) {
 <div class="list-section">
-	<p>{{ group.key }}</p>
+	<p class="group-title">{{ group.key }}</p>
 
 	<ul class="flex-column">
 		@for (algorithm of group.value; track algorithm.key) {
-		<li class="flex-row middle" (click)="updateView(algorithm.key)">
-			<span class="material-icons-outlined" [class.rotate]="algorithm?.rotate">{{algorithm.icon}}</span>
-			{{ algorithm.title }}
+		<li class="flex-row middle space_between" (click)="updateView(algorithm.key)">
+			<p class="flex-row middle">
+				<span class="material-icons-outlined" [class.rotate]="algorithm?.rotate">{{algorithm.icon}}</span>
+				{{ algorithm.title }}
+			</p>
+			@if(algorithm.key === activeView().id){
+			<span class="material-icons-outlined">arrow_left </span>
+			}
 		</li>
 		}
 	</ul>

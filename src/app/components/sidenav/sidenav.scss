@@ -1,6 +1,6 @@
 @use '../../../styles/color-variables' as *;
 
-p {
+.group-title {
 	text-transform: capitalize;
 	letter-spacing: -0.5px;
 	color: $subtitle-text-color;
@@ -10,7 +10,6 @@ p {
 li {
 	list-style: none;
 	margin-bottom: 0.1rem;
-	gap: 1rem;
 	padding: 0.75rem 0 0.75rem 0.3rem;
 	font-size: 0.95rem;
 	box-sizing: border-box;
@@ -39,4 +38,9 @@ ul {
 
 .rotate {
 	transform: rotate(90deg);
+}
+
+p {
+	margin: 0;
+	gap: 1rem;
 }
