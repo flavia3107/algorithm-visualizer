@@ -1,6 +1,8 @@
-@for(step of steps(); track step) {
-@if($index <= currentStepIndex() + 1) { 
-@let isActive=$index===(currentStepIndex() + 1); 
-<p [class.active]="isActive">{{step.description}}</p>
-}
-}
+<div class="steps">
+	@for(step of steps(); track step) {
+	@if($index <= currentStepIndex() + 1) { 
+		@let isActive=$index===(currentStepIndex() + 1);
+		<p [class.active]="isActive">{{step.description}}</p>
+	}
+	}
+</div>
