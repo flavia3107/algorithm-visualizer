@@ -19,11 +19,11 @@
 	flex: 1;
 	background-color: $bg-carbon;
 	gap: 1rem;
-	padding: 2rem;
+	padding: 2rem 2rem 1rem;
 }
 
 .execution-log {
-	max-height: 12rem;
+	max-height: 11.5rem;
 	overflow: auto;
 	width: 60%;
 }
@@ -34,4 +34,20 @@
 
 .data-log {
 	gap: 1rem;
+}
+
+.algorithm-title {
+	font-size: 1.7rem;
+	color: #f8f8f8;
+	letter-spacing: 1.25px;
+	font-family: sans-serif;
+	margin-top: -0.75rem;
+}
+
+.subtitle {
+	text-transform: uppercase;
+	font-size: 0.7rem;
+	font-weight: 900;
+	letter-spacing: 2.5px;
+	color: #a1a1a1;
 }

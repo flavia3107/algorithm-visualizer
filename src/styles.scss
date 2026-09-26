@@ -44,3 +44,22 @@ body {
 	border: 0.5px solid $border-color;
 	background-color: $bg-dark-gray;
 }
+
+::-webkit-scrollbar {
+	height: 9px;
+	width: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #676767;
+	width: 9px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+	width: 9px;
+}
+
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
