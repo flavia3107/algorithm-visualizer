@@ -13,4 +13,5 @@ p {
 .steps {
 	overflow: auto;
 	height: calc(100% - 3rem);
+	scroll-behavior: smooth;
 }

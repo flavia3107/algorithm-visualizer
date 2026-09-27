@@ -1,13 +1,4 @@
-<div class="stage-wrapper">
-	<div class="status-bar">
-		<span class="step-badge">
-			Step {{ manager.currentStepIndex() + 1 }} / {{ manager.steps().length }}
-		</span>
-		<p class="description">
-			{{ manager.currentStep()?.description || 'Ready' }}
-		</p>
-	</div>
-
+<div class="stage-wrapper flex-column">
 	<div class="viewport">
 		@switch (manager.activeView().category) {
 
@@ -28,6 +19,14 @@
 		</div>
 		}
 		}
+	</div>
+	<div class="status-bar flex-row space_between">
+		<p class="description">
+			<strong>Current action: </strong>{{ manager.currentStep()?.description || 'Ready' }}
+		</p>
+		<span class="step-badge">
+			Step {{ manager.currentStepIndex() + 1 }} / {{ manager.steps().length }}
+		</span>
 	</div>
 </div>
 
