@@ -89,11 +89,11 @@ export class Visualizer {
       for (let c = 0; c < cols; c++) {
         const node = gridData[r][c];
 
-        if (node.isStart) ctx.fillStyle = '#a6e3a1';
-        else if (node.isTarget) ctx.fillStyle = '#f38ba8';
-        else if (node.isPath) ctx.fillStyle = '#f9e2af';
-        else if (node.isVisited) ctx.fillStyle = '#89b4fa44';
-        else if (node.isWall) ctx.fillStyle = '#45475a';
+        if (node.isStart) ctx.fillStyle = '#00daff';
+        else if (node.isTarget) ctx.fillStyle = '#00daff';
+        else if (node.isPath) ctx.fillStyle = '#badde9';
+        else if (node.isVisited) ctx.fillStyle = '#292828';
+        else if (node.isWall) ctx.fillStyle = '#4b4b4c';
         else ctx.fillStyle = '#1a1a1a';
 
         ctx.fillRect(c * cellW, r * cellH, cellW - 1, cellH - 1);
