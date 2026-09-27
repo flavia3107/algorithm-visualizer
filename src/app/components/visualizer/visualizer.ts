@@ -94,7 +94,7 @@ export class Visualizer {
         else if (node.isPath) ctx.fillStyle = '#f9e2af';
         else if (node.isVisited) ctx.fillStyle = '#89b4fa44';
         else if (node.isWall) ctx.fillStyle = '#45475a';
-        else ctx.fillStyle = '#1e1e2e';
+        else ctx.fillStyle = '#1a1a1a';
 
         ctx.fillRect(c * cellW, r * cellH, cellW - 1, cellH - 1);
       }
