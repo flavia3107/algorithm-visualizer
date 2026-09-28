@@ -1,1 +1,20 @@
-<p>controls works!</p>
+@let algorithm = activeAlgorithm();
+<div class="flex-row">
+	<div class="summary flex-column">
+		<span>{{algorithm.name}}</span>
+		<span>{{algorithm.summary}}</span>
+	</div>
+	<div class="controls flex-row middle">
+		<button>Generate Array</button>
+		<button>Back</button>
+		<span class="material-symbols-outlined">
+			play_arrow
+		</span>
+		<button>Forward</button>
+		<button>Skip to End</button>
+
+	</div>
+	<div class="size-controls">
+
+	</div>
+</div>
