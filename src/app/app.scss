@@ -1,6 +1,5 @@
 @use '../styles/color-variables' as *;
 
-// Main layout shell
 .title-row {
 	height: 4.5rem;
 }
@@ -12,7 +11,7 @@
 
 .sidenav {
 	width: 250px;
-	flex-shrink: 0; // Keep fixed sidebar from squishing on zoom
+	flex-shrink: 0;
 	border-radius: 0;
 	padding: 0;
 }
@@ -22,10 +21,9 @@
 	background-color: $bg-carbon;
 	gap: 1rem;
 	padding: 2rem 2rem 1rem;
-	min-width: 0; // Prevents grid/flex overflows
+	min-width: 0;
 }
 
-// Header Typography
 .subtitle {
 	text-transform: uppercase;
 	font-size: 0.7rem;
@@ -50,45 +48,51 @@ h3 {
 	min-height: 2rem;
 }
 
-// Middle Section: Graph & Details
 .visualizer-row {
 	display: flex;
 	gap: 1rem;
-	flex: 1; // Flex to fill vertical space proportionately
+	flex: 1;
 
 	.graph {
-		flex: 7; // Takes 70% relative width
-		aspect-ratio: 16 / 9; // Maintains fixed shape ratio regardless of scale
+		flex: 4;
+		aspect-ratio: 21 / 9;
 	}
 
 	.algorithm-details {
-		flex: 3; // Takes 30% relative width
+		flex: 3;
 	}
 }
+
 .data-log {
 	display: flex;
 	gap: 1rem;
-	height: 11.3rem; /* Lock height explicitly or use height: 25% if parent container is locked */
+	height: 11.3rem;
 	box-sizing: border-box;
 }
 
 .execution-log {
 	width: 60%;
-	height: 100%;
+	height: 90%;
 	display: grid;
-	grid-template-rows: auto 1fr; /* Row 1: Header (h3), Row 2: app-execution-log */
-	overflow: hidden; /* Prevents overflow escaping the box */
+	grid-template-rows: auto 1fr;
+	overflow: hidden;
 
 	h3 {
 		margin: 0.2rem 0.5rem 0.5rem;
 	}
 
 	app-execution-log {
-		min-height: 0; /* Tells grid child it is allowed to be smaller than its content */
+		min-height: 0;
 		height: 100%;
+
 		overflow: hidden;
 	}
 }
+
+.data-structure {
+	width: 40%;
+}
+
 app-details {
 	display: block;
 	height: 100%;
