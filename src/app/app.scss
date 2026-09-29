@@ -24,6 +24,7 @@
 
 .execution-log {
 	height: 11.3rem;
+	max-height: 25.5%;
 	overflow: hidden;
 	width: 60%;
 }
@@ -33,7 +34,9 @@
 }
 
 .data-log {
+	min-height: 11.3rem;
 	gap: 1rem;
+	height: 25.5%;
 }
 
 .algorithm-title {
@@ -58,6 +61,8 @@ h3 {
 
 .visualizer-row {
 	gap: 1rem;
+	min-height: 25rem;
+	height: 52.5%;
 }
 
 .algorithm-details {
@@ -66,4 +71,13 @@ h3 {
 
 .graph {
 	width: 80%;
+}
+
+.controls {
+	min-height: 2rem;
+	height: 7%;
+}
+
+app-details {
+	height: 100%;
 }
