@@ -1,3 +1,18 @@
+:host {
+	display: grid;
+	grid-template-rows: 1fr;
+	height: 100%;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.steps {
+	height: 100%;
+	min-height: 0;
+	overflow-y: auto; /* Adds scrollbar only when items exceed box height */
+	scroll-behavior: smooth;
+}
+
 p {
 	font-size: 0.9rem;
 	color: #d3d3d3;
@@ -8,10 +23,4 @@ p {
 	font-size: 1.1rem;
 	color: #fff;
 	font-weight: 600;
-}
-
-.steps {
-	overflow: auto;
-	height: calc(100% - 3rem);
-	scroll-behavior: smooth;
 }

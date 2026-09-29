@@ -1,5 +1,6 @@
 @use '../styles/color-variables' as *;
 
+// Main layout shell
 .title-row {
 	height: 4.5rem;
 }
@@ -11,6 +12,7 @@
 
 .sidenav {
 	width: 250px;
+	flex-shrink: 0; // Keep fixed sidebar from squishing on zoom
 	border-radius: 0;
 	padding: 0;
 }
@@ -20,22 +22,16 @@
 	background-color: $bg-carbon;
 	gap: 1rem;
 	padding: 2rem 2rem 1rem;
+	min-width: 0; // Prevents grid/flex overflows
 }
 
-.execution-log {
-	height: 11.3rem;
-	overflow: hidden;
-	width: 60%;
-}
-
-.data-structure {
-	width: 40%;
-}
-
-.data-log {
-	min-height: 11.3rem;
-	gap: 1rem;
-	height: 25.5%;
+// Header Typography
+.subtitle {
+	text-transform: uppercase;
+	font-size: 0.7rem;
+	font-weight: 900;
+	letter-spacing: 2.5px;
+	color: #a1a1a1;
 }
 
 .algorithm-title {
@@ -46,37 +42,54 @@
 	margin-top: -0.75rem;
 }
 
-.subtitle {
-	text-transform: uppercase;
-	font-size: 0.7rem;
-	font-weight: 900;
-	letter-spacing: 2.5px;
-	color: #a1a1a1;
-}
-
 h3 {
 	margin: 0.2rem 0.5rem 0.5rem;
 }
 
-.visualizer-row {
-	gap: 1rem;
-	min-height: 25rem;
-	height: 52.5%;
-}
-
-.algorithm-details {
-	width: 30%;
-}
-
-.graph {
-	width: 80%;
-}
-
 .controls {
 	min-height: 2rem;
-	height: 7%;
 }
 
+// Middle Section: Graph & Details
+.visualizer-row {
+	display: flex;
+	gap: 1rem;
+	flex: 1; // Flex to fill vertical space proportionately
+
+	.graph {
+		flex: 7; // Takes 70% relative width
+		aspect-ratio: 16 / 9; // Maintains fixed shape ratio regardless of scale
+	}
+
+	.algorithm-details {
+		flex: 3; // Takes 30% relative width
+	}
+}
+.data-log {
+	display: flex;
+	gap: 1rem;
+	height: 11.3rem; /* Lock height explicitly or use height: 25% if parent container is locked */
+	box-sizing: border-box;
+}
+
+.execution-log {
+	width: 60%;
+	height: 100%;
+	display: grid;
+	grid-template-rows: auto 1fr; /* Row 1: Header (h3), Row 2: app-execution-log */
+	overflow: hidden; /* Prevents overflow escaping the box */
+
+	h3 {
+		margin: 0.2rem 0.5rem 0.5rem;
+	}
+
+	app-execution-log {
+		min-height: 0; /* Tells grid child it is allowed to be smaller than its content */
+		height: 100%;
+		overflow: hidden;
+	}
+}
 app-details {
+	display: block;
 	height: 100%;
 }
