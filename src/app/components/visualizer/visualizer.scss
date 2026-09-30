@@ -33,8 +33,7 @@
 }
 
 .svg-container,
-.canvas-container,
-.empty-state {
+.canvas-container {
 	height: 100%;
 	background: #1a1a1a;
 	border-radius: 8px;
@@ -59,8 +58,4 @@ canvas {
 	border-radius: 4px;
 	width: 100%;
 	height: 100%;
-}
-
-.empty-state {
-	color: #a6adc8;
 }
