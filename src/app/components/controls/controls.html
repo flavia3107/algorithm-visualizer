@@ -1,20 +1,26 @@
 @let algorithm = activeAlgorithm();
-<div class="flex-row">
+<div class="flex-row space_between middle">
 	<div class="summary flex-column">
 		<span>{{algorithm.name}}</span>
-		<span>{{algorithm.summary}}</span>
+		<span class="description">{{algorithm.summary}}</span>
 	</div>
 	<div class="controls flex-row middle">
 		<button>Generate Array</button>
-		<button>Back</button>
-		<span class="material-symbols-outlined">
-			play_arrow
-		</span>
-		<button>Forward</button>
-		<button>Skip to End</button>
+		<button class="flex-row middle">
+			<span class="material-icons-outlined"> first_page </span>
+			<span>Step Back</span>
+		</button>
+		<span class="material-icons-outlined">play_arrow</span>
+		<button class="flex-row middle">
+			Step Forward <span class="material-icons-outlined"> last_page</span>
+		</button>
+		<button class="flex-row middle">
+			Skip to End <span class="material-icons-outlined"> fast_forward </span>
+		</button>
 
 	</div>
 	<div class="size-controls">
-
+		<button>Forward</button>
+		<button>Skip to End</button>
 	</div>
 </div>

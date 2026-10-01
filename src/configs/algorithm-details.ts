@@ -189,7 +189,7 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		name: 'Depth-First Search',
 		category: 'graphs',
 		visualizationType: 'graph',
-		summary: 'A graph traversal algorithm that starts at a root/source node and explores as far as possible along each branch before backtracking.',
+		summary: 'A graph traversal algorithm that starts at a root node and explores as far as possible along each branch before backtracking.',
 		timeComplexity: {
 			best: 'O(V + E)',
 			average: 'O(V + E)',
