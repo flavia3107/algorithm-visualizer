@@ -29,7 +29,7 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		name: 'Bubble Sort',
 		category: 'sorting',
 		visualizationType: 'array',
-		summary: 'A simple comparison-based sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.',
+		summary: 'A simple comparison-based sorting algorithm that repeatedly steps through a list, comparing adjacent elements and swapping them if out of order.',
 		timeComplexity: {
 			best: 'O(n)',
 			average: 'O(n²)',
@@ -55,7 +55,7 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		name: 'Selection Sort',
 		category: 'sorting',
 		visualizationType: 'array',
-		summary: 'An in-place comparison sorting algorithm that divides the array into sorted and unsorted regions, repeatedly finding the smallest element in the unsorted region and moving it to the sorted region.',
+		summary: 'An in-place comparison sorting algorithm that repeatedly finds the smallest element in an unsorted region and appends it to the sorted region.',
 		timeComplexity: {
 			best: 'O(n²)',
 			average: 'O(n²)',
@@ -80,7 +80,7 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		name: 'Merge Sort',
 		category: 'sorting',
 		visualizationType: 'array',
-		summary: 'A divide-and-conquer algorithm that recursively breaks down an array into single-element subarrays, then merges those subarrays back together in sorted order.',
+		summary: 'A divide-and-conquer algorithm that recursively splits an array into single-element subarrays and merges them back together in sorted order.',
 		timeComplexity: {
 			best: 'O(n log n)',
 			average: 'O(n log n)',
@@ -241,7 +241,7 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 		name: 'A* Search',
 		category: 'graphs',
 		visualizationType: 'graph',
-		summary: 'A heuristic-driven pathfinding algorithm that extends Dijkstra by using an estimated distance function to direct search toward the target node efficiently.',
+		summary: 'This algorithm finds the shortest path to a goal by combining known distances with an estimated remaining cost to prioritize the best route.',
 		timeComplexity: {
 			best: 'O(E)',
 			average: 'O(E)',
