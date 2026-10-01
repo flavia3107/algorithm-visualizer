@@ -24,3 +24,8 @@ p {
 	color: #fff;
 	font-weight: 600;
 }
+
+p:first-of-type {
+	opacity: 0.5;
+	font-style: italic;
+}
