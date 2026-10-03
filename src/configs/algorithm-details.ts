@@ -21,9 +21,6 @@ export interface AlgorithmDetail {
 }
 
 export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
-	// ==========================================
-	// SORTING ALGORITHMS
-	// ==========================================
 	'bubble_sort': {
 		id: 'bubble_sort',
 		name: 'Bubble Sort',
@@ -49,7 +46,6 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			{ stepNumber: 5, title: 'Lock Element', description: 'Mark the last element of the pass as sorted, then decrease the unsorted boundary by 1.' }
 		]
 	},
-
 	'selection_sort': {
 		id: 'selection_sort',
 		name: 'Selection Sort',
@@ -74,7 +70,6 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			{ stepNumber: 5, title: 'Advance Boundary', description: 'Move the boundary between sorted and unsorted sections one step to the right.' }
 		]
 	},
-
 	'merge_sort': {
 		id: 'merge_sort',
 		name: 'Merge Sort',
@@ -100,10 +95,6 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			{ stepNumber: 5, title: 'Copy Back', description: 'Copy the combined, sorted temporary array back into the original array space.' }
 		]
 	},
-
-	// ==========================================
-	// SEARCHING ALGORITHMS
-	// ==========================================
 	'linear_search': {
 		id: 'linear_search',
 		name: 'Linear Search',
@@ -129,7 +120,6 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			{ stepNumber: 5, title: 'Terminate', description: 'If end of array is reached without a match, return -1 (not found).' }
 		]
 	},
-
 	'binary_search': {
 		id: 'binary_search',
 		name: 'Binary Search',
@@ -154,10 +144,6 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			{ stepNumber: 5, title: 'Return Match', description: 'If element at `mid` equals target, return index. If `left > right`, target is not present.' }
 		]
 	},
-
-	// ==========================================
-	// GRAPH ALGORITHMS
-	// ==========================================
 	'breadth_first_search': {
 		id: 'breadth_first_search',
 		name: 'Breadth-First Search',
@@ -183,7 +169,6 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			{ stepNumber: 5, title: 'Loop / Complete', description: 'Repeat until queue is empty.' }
 		]
 	},
-
 	'depth_first_search': {
 		id: 'depth_first_search',
 		name: 'Depth-First Search',
@@ -209,7 +194,6 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			{ stepNumber: 5, title: 'Backtrack', description: 'When no unvisited neighbors remain, backtrack to previous node on stack.' }
 		]
 	},
-
 	'dijkstra': {
 		id: 'dijkstra',
 		name: "Dijkstra's Algorithm",
@@ -235,7 +219,6 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			{ stepNumber: 5, title: 'Finalize Node', description: 'Mark node as processed/visited. Repeat until priority queue is empty or target reached.' }
 		]
 	},
-
 	'a_star': {
 		id: 'a_star',
 		name: 'A* Search',

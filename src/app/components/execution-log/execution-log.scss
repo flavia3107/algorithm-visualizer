@@ -9,7 +9,7 @@
 .steps {
 	height: 100%;
 	min-height: 0;
-	overflow-y: auto; /* Adds scrollbar only when items exceed box height */
+	overflow-y: auto;
 	scroll-behavior: smooth;
 }
 
