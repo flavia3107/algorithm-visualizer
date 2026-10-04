@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AlgorithmManager } from '../../services/algorithm-manager';
 
 @Component({
   selector: 'app-details',
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
-export class Details {}
+export class Details {
+  private _manager = inject(AlgorithmManager);
+  readonly activeAlgorithm = this._manager.activeView;
+}
