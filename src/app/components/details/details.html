@@ -2,6 +2,11 @@
 <div class="flex-column details-container">
 	<div class="details section">
 		<h3> {{algorithm.name}} Steps</h3>
+		<ol>
+			@for(step of algorithm.steps; track step.stepNumber) {
+			<li>{{step.description}} </li>
+			}
+		</ol>
 	</div>
 
 	<div class="pseudocode section">
