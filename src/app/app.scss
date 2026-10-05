@@ -1,7 +1,7 @@
 @use '../styles/color-variables' as *;
 
 .title-row {
-	height: 4.5rem;
+	height: 3.5rem;
 }
 
 .main {
@@ -56,6 +56,7 @@ h3 {
 	.graph {
 		flex: 4;
 		aspect-ratio: 21 / 9;
+		width: 75%;
 	}
 
 	.algorithm-details {
@@ -99,6 +100,6 @@ app-details {
 }
 
 img {
-	width: 6rem;
+	width: 5.3rem;
 	margin: 0 1.5rem;
 }

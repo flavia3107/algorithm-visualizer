@@ -137,11 +137,11 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Frequent lookup operations on static databases'
 		],
 		steps: [
-			{ stepNumber: 1, title: 'Set Boundaries', description: 'Initialize `left` pointer to 0 and `right` pointer to length - 1.' },
-			{ stepNumber: 2, title: 'Find Midpoint', description: 'Calculate middle index: `mid = floor((left + right) / 2)`.' },
-			{ stepNumber: 3, title: 'Evaluate Midpoint', description: 'Compare element at `mid` with target.' },
-			{ stepNumber: 4, title: 'Narrow Interval', description: 'If target is smaller, set `right = mid - 1`. If target is larger, set `left = mid + 1`.' },
-			{ stepNumber: 5, title: 'Return Match', description: 'If element at `mid` equals target, return index. If `left > right`, target is not present.' }
+			{ stepNumber: 1, title: 'Set Boundaries', description: 'Start with the full array by marking the first and last items as your search area.' },
+			{ stepNumber: 2, title: 'Find Midpoint', description: 'Find the middle item in the current search area.' },
+			{ stepNumber: 3, title: 'Evaluate Midpoint', description: 'Check whether the middle item is the target you are looking for.' },
+			{ stepNumber: 4, title: 'Narrow Interval', description: 'If the target is smaller, eliminate the right half. If it is larger, eliminate the left half.' },
+			{ stepNumber: 5, title: 'Return Result', description: 'If you find the target, return its location. If the search area shrinks to nothing, report that it was not found.' }
 		]
 	},
 	'breadth_first_search': {
@@ -237,11 +237,11 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Real-time optimal route estimation with spatial heuristics'
 		],
 		steps: [
-			{ stepNumber: 1, title: 'Initialize Node Scores', description: 'Set starting node score `g(n)=0` (exact path cost) and calculate heuristic `h(n)` (estimated remaining distance).' },
-			{ stepNumber: 2, title: 'Compute f(n)', description: 'Calculate overall node priority `f(n) = g(n) + h(n)` and insert start node into open set.' },
-			{ stepNumber: 3, title: 'Pop Lowest f(n)', description: 'Select node with lowest `f(n)` value from open set.' },
-			{ stepNumber: 4, title: 'Evaluate & Relax Neighbors', description: 'Calculate tentative `g(n)` for adjacent neighbors. If lower than existing score, record new path and compute `f(n)`.' },
-			{ stepNumber: 5, title: 'Terminate', description: 'Move evaluated node to closed set. Stop when target node is reached or open set is empty.' }
+			{ stepNumber: 1, title: 'Initialize Node Scores', description: 'Set the starting point cost to zero and estimate the remaining distance to the destination.' },
+			{ stepNumber: 2, title: 'Compute Priority', description: 'Combine the distance traveled so far with the estimated distance remaining, then add the starting point to the list of places to explore.' },
+			{ stepNumber: 3, title: 'Pick Best Candidate', description: 'Choose the point from your exploration list that has the lowest total estimated distance.' },
+			{ stepNumber: 4, title: 'Explore Neighbors', description: 'Look at all connected neighbors. If reaching a neighbor through the current point is faster than any previously found route, update its shortest path.' },
+			{ stepNumber: 5, title: 'Finish Search', description: 'Mark the current point as fully checked. Stop once you reach the destination or run out of places to explore.' }
 		]
 	}
 };
