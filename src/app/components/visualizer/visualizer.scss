@@ -17,7 +17,7 @@
 	width: 100%;
 	flex: 1;
 	min-height: 0;
-	position: relative; /* Contain inner elements */
+	position: relative;
 	overflow: hidden;
 }
 
@@ -42,13 +42,11 @@ svg {
 	display: block;
 }
 
-/* Canvas fix: prevents canvas height="300" attribute from dictating row height */
 canvas {
 	border: 1px solid #1a1a1a;
 	border-radius: 4px;
 	width: 100% !important;
 	height: 100% !important;
-	object-fit: contain; /* Keeps aspect ratio clean without stretching layout */
 	display: block;
 }
 
