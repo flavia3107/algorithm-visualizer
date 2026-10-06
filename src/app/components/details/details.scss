@@ -30,3 +30,8 @@ li {
 	color: #d3d3d3;
 	margin-bottom: 0.5rem;
 }
+
+pre {
+	height: calc(100% - 3rem);
+	overflow: auto;
+}

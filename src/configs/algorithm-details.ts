@@ -39,7 +39,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Nearly sorted small datasets',
 			'Memory-constrained environments requiring stable in-place sorting'
 		],
-		pseudocode: `function bubbleSort(arr):
+		pseudocode: `
+function bubbleSort(arr):
     n = length(arr)
     for i from 0 to n - 1:
         swapped = false
@@ -74,7 +75,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Small datasets where swap operations are costly (minimizes total swaps to O(n))',
 			'Systems with strict auxiliary memory constraints'
 		],
-		pseudocode: `function selectionSort(arr):
+		pseudocode: `
+function selectionSort(arr):
     n = length(arr)
     for i from 0 to n - 2:
         minIndex = i
@@ -109,7 +111,8 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Linked list sorting (achieves O(1) extra space)',
 			'Stable sorting requirements'
 		],
-		pseudocode: `function mergeSort(arr):
+		pseudocode: `
+function mergeSort(arr):
     if length(arr) <= 1:
         return arr
 
@@ -157,7 +160,8 @@ function merge(left, right):
 			'Small datasets where overhead from sorting isn\'t justified',
 			'Single-pass lookup in streams'
 		],
-		pseudocode: `function linearSearch(arr, target):
+		pseudocode: `
+function linearSearch(arr, target):
     for i from 0 to length(arr) - 1:
         if arr[i] == target:
             return i
@@ -186,7 +190,8 @@ function merge(left, right):
 			'Large, pre-sorted arrays',
 			'Frequent lookup operations on static databases'
 		],
-		pseudocode: `function binarySearch(arr, target):
+		pseudocode: `
+function binarySearch(arr, target):
     left = 0
     right = length(arr) - 1
 
@@ -225,7 +230,8 @@ function merge(left, right):
 			'Peer-to-peer network routing',
 			'Web crawlers building site index levels'
 		],
-		pseudocode: `function breadthFirstSearch(graph, startNode):
+		pseudocode: `
+function breadthFirstSearch(graph, startNode):
     create Queue q
     create set visited
 
@@ -265,7 +271,8 @@ function merge(left, right):
 			'Solving mazes or pathfinding with dead ends',
 			'Detecting cycles in directed/undirected graphs'
 		],
-		pseudocode: `function depthFirstSearch(graph, startNode):
+		pseudocode: `
+function depthFirstSearch(graph, startNode):
     create Stack s
     create set visited
 
@@ -306,7 +313,8 @@ function merge(left, right):
 			'Network routing protocols (e.g., OSPF)',
 			'Flight path optimization on non-negative weighted graphs'
 		],
-		pseudocode: `function dijkstra(graph, startNode):
+		pseudocode: `
+function dijkstra(graph, startNode):
     create map distance
     create PriorityQueue pq
 
@@ -351,7 +359,8 @@ function merge(left, right):
 			'Robotics movement planning',
 			'Real-time optimal route estimation with spatial heuristics'
 		],
-		pseudocode: `function aStar(graph, startNode, goalNode, heuristic):
+		pseudocode: `
+function aStar(graph, startNode, goalNode, heuristic):
     create PriorityQueue openSet
     create map gScore
     create map fScore
