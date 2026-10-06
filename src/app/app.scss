@@ -35,7 +35,7 @@
 
 	.graph {
 		width: 75%;
-		height: 100%;
+		height: 96%;
 		min-height: 0;
 		overflow: hidden; /* Truncates anything that tries to push boundaries */
 
@@ -51,7 +51,6 @@
 		width: 25%;
 		height: 100%;
 		min-height: 0;
-		overflow: auto;
 	}
 }
 
@@ -61,6 +60,16 @@
 	flex: 1; /* Takes the remaining space below 55% */
 	min-height: 0;
 	box-sizing: border-box;
+}
+
+.data-structure {
+	width: 40%;
+	height: 100%;
+}
+
+.execution-log {
+	width: 60%;
+	height: 100%;
 }
 
 @media screen and (max-width: 1064px) {
