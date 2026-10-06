@@ -110,7 +110,9 @@ img {
 		flex-direction: column;
 	}
 
-	.visualizer-row > * {
-		width: 100%;
+	.visualizer-row .graph {
+		flex: 1;
+		aspect-ratio: 17 / 15;
+		width: auto;
 	}
 }
