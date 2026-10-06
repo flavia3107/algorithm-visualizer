@@ -18,6 +18,7 @@ export interface AlgorithmDetail {
 	steps: AlgorithmStep[];
 	suitableFor: string[];
 	visualizationType: 'array' | 'graph';
+	pseudocode: string;
 }
 
 export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
@@ -38,6 +39,17 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Nearly sorted small datasets',
 			'Memory-constrained environments requiring stable in-place sorting'
 		],
+		pseudocode: `function bubbleSort(arr):
+    n = length(arr)
+    for i from 0 to n - 1:
+        swapped = false
+        for j from 0 to n - i - 2:
+            if arr[j] > arr[j + 1]:
+                swap(arr[j], arr[j + 1])
+                swapped = true
+        if not swapped:
+            break
+    return arr`,
 		steps: [
 			{ stepNumber: 1, title: 'Start Loop', description: 'Set current index to the start of the array.' },
 			{ stepNumber: 2, title: 'Compare Neighbors', description: 'Compare the current element with the adjacent element on its right.' },
@@ -62,6 +74,16 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Small datasets where swap operations are costly (minimizes total swaps to O(n))',
 			'Systems with strict auxiliary memory constraints'
 		],
+		pseudocode: `function selectionSort(arr):
+    n = length(arr)
+    for i from 0 to n - 2:
+        minIndex = i
+        for j from i + 1 to n - 1:
+            if arr[j] < arr[minIndex]:
+                minIndex = j
+        if minIndex != i:
+            swap(arr[i], arr[minIndex])
+    return arr`,
 		steps: [
 			{ stepNumber: 1, title: 'Set Minimum Pointer', description: 'Assume the first element of the unsorted subarray is the minimum.' },
 			{ stepNumber: 2, title: 'Scan Unsorted Region', description: 'Iterate through the remaining unsorted elements to find the actual minimum value.' },
@@ -87,6 +109,29 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Linked list sorting (achieves O(1) extra space)',
 			'Stable sorting requirements'
 		],
+		pseudocode: `function mergeSort(arr):
+    if length(arr) <= 1:
+        return arr
+
+    mid = length(arr) / 2
+    left = mergeSort(arr[0...mid-1])
+    right = mergeSort(arr[mid...end])
+
+    return merge(left, right)
+
+function merge(left, right):
+    result = []
+    i = 0, j = 0
+    while i < length(left) and j < length(right):
+        if left[i] <= right[j]:
+            append left[i] to result
+            i = i + 1
+        else:
+            append right[j] to result
+            j = j + 1
+
+    append remaining elements of left and right to result
+    return result`,
 		steps: [
 			{ stepNumber: 1, title: 'Divide', description: 'Calculate the middle index and divide the array into left and right halves.' },
 			{ stepNumber: 2, title: 'Recurse', description: 'Recursively split each subarray until single-element arrays remain.' },
@@ -112,6 +157,11 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Small datasets where overhead from sorting isn\'t justified',
 			'Single-pass lookup in streams'
 		],
+		pseudocode: `function linearSearch(arr, target):
+    for i from 0 to length(arr) - 1:
+        if arr[i] == target:
+            return i
+    return -1`,
 		steps: [
 			{ stepNumber: 1, title: 'Initialize Pointer', description: 'Set index pointer to 0.' },
 			{ stepNumber: 2, title: 'Inspect Element', description: 'Fetch value at current index and compare with target value.' },
@@ -136,6 +186,20 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Large, pre-sorted arrays',
 			'Frequent lookup operations on static databases'
 		],
+		pseudocode: `function binarySearch(arr, target):
+    left = 0
+    right = length(arr) - 1
+
+    while left <= right:
+        mid = floor((left + right) / 2)
+        if arr[mid] == target:
+            return mid
+        else if arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return -1`,
 		steps: [
 			{ stepNumber: 1, title: 'Set Boundaries', description: 'Start with the full array by marking the first and last items as your search area.' },
 			{ stepNumber: 2, title: 'Find Midpoint', description: 'Find the middle item in the current search area.' },
@@ -161,6 +225,21 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Peer-to-peer network routing',
 			'Web crawlers building site index levels'
 		],
+		pseudocode: `function breadthFirstSearch(graph, startNode):
+    create Queue q
+    create set visited
+
+    q.enqueue(startNode)
+    visited.add(startNode)
+
+    while q is not empty:
+        node = q.dequeue()
+        process(node)
+
+        for each neighbor of graph.getNeighbors(node):
+            if neighbor not in visited:
+                visited.add(neighbor)
+                q.enqueue(neighbor)`,
 		steps: [
 			{ stepNumber: 1, title: 'Initialize Queue', description: 'Enqueue start node and mark it as visited.' },
 			{ stepNumber: 2, title: 'Dequeue Node', description: 'Remove front node from queue to process it.' },
@@ -186,6 +265,22 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Solving mazes or pathfinding with dead ends',
 			'Detecting cycles in directed/undirected graphs'
 		],
+		pseudocode: `function depthFirstSearch(graph, startNode):
+    create Stack s
+    create set visited
+
+    s.push(startNode)
+
+    while s is not empty:
+        node = s.pop()
+
+        if node not in visited:
+            visited.add(node)
+            process(node)
+
+            for each neighbor of graph.getNeighbors(node):
+                if neighbor not in visited:
+                    s.push(neighbor)`,
 		steps: [
 			{ stepNumber: 1, title: 'Push Start Node', description: 'Push start node onto stack (or recursive call stack) and mark visited.' },
 			{ stepNumber: 2, title: 'Pop Node', description: 'Pop top node from stack for processing.' },
@@ -211,6 +306,26 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Network routing protocols (e.g., OSPF)',
 			'Flight path optimization on non-negative weighted graphs'
 		],
+		pseudocode: `function dijkstra(graph, startNode):
+    create map distance
+    create PriorityQueue pq
+
+    for each node in graph.nodes:
+        distance[node] = infinity
+    distance[startNode] = 0
+
+    pq.enqueue(startNode, priority=0)
+
+    while pq is not empty:
+        current = pq.dequeueMin()
+
+        for each (neighbor, weight) of graph.getEdges(current):
+            newDist = distance[current] + weight
+            if newDist < distance[neighbor]:
+                distance[neighbor] = newDist
+                pq.insertOrUpdate(neighbor, priority=newDist)
+
+    return distance`,
 		steps: [
 			{ stepNumber: 1, title: 'Initialize Distances', description: 'Set distance to start node to 0, and all other nodes to infinity. Add all nodes to min-priority queue.' },
 			{ stepNumber: 2, title: 'Extract Minimum', description: 'Extract node with smallest tentative distance from priority queue.' },
@@ -236,6 +351,33 @@ export const ALGORITHM_CONFIG: Record<string, AlgorithmDetail> = {
 			'Robotics movement planning',
 			'Real-time optimal route estimation with spatial heuristics'
 		],
+		pseudocode: `function aStar(graph, startNode, goalNode, heuristic):
+    create PriorityQueue openSet
+    create map gScore
+    create map fScore
+
+    for each node in graph.nodes:
+        gScore[node] = infinity
+        fScore[node] = infinity
+
+    gScore[startNode] = 0
+    fScore[startNode] = heuristic(startNode, goalNode)
+    openSet.enqueue(startNode, priority=fScore[startNode])
+
+    while openSet is not empty:
+        current = openSet.dequeueMin()
+        if current == goalNode:
+            return reconstructPath(current)
+
+        for each (neighbor, weight) of graph.getEdges(current):
+            tentativeG = gScore[current] + weight
+            if tentativeG < gScore[neighbor]:
+                gScore[neighbor] = tentativeG
+                fScore[neighbor] = tentativeG + heuristic(neighbor, goalNode)
+                if neighbor not in openSet:
+                    openSet.enqueue(neighbor, priority=fScore[neighbor])
+
+    return failure`,
 		steps: [
 			{ stepNumber: 1, title: 'Initialize Node Scores', description: 'Set the starting point cost to zero and estimate the remaining distance to the destination.' },
 			{ stepNumber: 2, title: 'Compute Priority', description: 'Combine the distance traveled so far with the estimated distance remaining, then add the starting point to the list of places to explore.' },
