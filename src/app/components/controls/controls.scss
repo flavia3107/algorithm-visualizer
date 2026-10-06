@@ -12,3 +12,14 @@
 .controls {
 	gap: 1rem;
 }
+
+@media screen and (max-width: 1600px) {
+	.summary {
+		width: 100%;
+	}
+
+	.wrap {
+		gap: 1rem 0;
+		padding: 0.1rem 0.25rem;
+	}
+}

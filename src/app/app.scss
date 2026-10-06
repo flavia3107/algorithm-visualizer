@@ -52,6 +52,7 @@ h3 {
 	display: flex;
 	gap: 1rem;
 	flex: 1;
+	flex-wrap: wrap;
 
 	.graph {
 		flex: 4;
@@ -102,4 +103,14 @@ app-details {
 img {
 	width: 5.3rem;
 	margin: 0 1.5rem;
+}
+
+@media screen and (max-width: 1064px) {
+	.visualizer-row {
+		flex-direction: column;
+	}
+
+	.visualizer-row > * {
+		width: 100%;
+	}
 }
