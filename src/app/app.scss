@@ -1,8 +1,19 @@
 @use '../styles/color-variables' as *;
 
+.title-row {
+	height: 3.5rem;
+}
+
 .main {
 	height: 100vh; /* Enforces full screen height as the boundary */
 	overflow: hidden;
+}
+
+.sidenav {
+	width: 250px;
+	flex-shrink: 0;
+	border-radius: 0;
+	padding: 0;
 }
 
 .content {
@@ -16,6 +27,26 @@
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
+}
+
+.subtitle {
+	text-transform: uppercase;
+	font-size: 0.7rem;
+	font-weight: 900;
+	letter-spacing: 2.5px;
+	color: #a1a1a1;
+}
+
+.algorithm-title {
+	font-size: 1.7rem;
+	color: #f8f8f8;
+	letter-spacing: 1.25px;
+	font-family: sans-serif;
+	margin-top: -0.75rem;
+}
+
+h3 {
+	margin: 0.2rem 0.5rem 0.5rem;
 }
 
 .controls {
@@ -57,19 +88,43 @@
 .data-log {
 	display: flex;
 	gap: 1rem;
+	box-sizing: border-box;
 	flex: 1; /* Takes the remaining space below 55% */
 	min-height: 0;
-	box-sizing: border-box;
-}
-
-.data-structure {
-	width: 40%;
-	height: 100%;
 }
 
 .execution-log {
 	width: 60%;
+	height: 90%;
+	display: grid;
+	grid-template-rows: auto 1fr;
+	overflow: hidden;
+
+	h3 {
+		margin: 0.2rem 0.5rem 0.5rem;
+	}
+
+	app-execution-log {
+		min-height: 0;
+		height: 100%;
+
+		overflow: hidden;
+	}
+}
+
+.data-structure {
+	width: 40%;
+	height: 90%;
+}
+
+app-details {
+	display: block;
 	height: 100%;
+}
+
+img {
+	width: 5.3rem;
+	margin: 0 1.5rem;
 }
 
 @media screen and (max-width: 1064px) {
@@ -89,3 +144,8 @@
 		}
 	}
 }
+
+/** TO DO 
+1. Layout responsivity
+2. Clean up
+*/
