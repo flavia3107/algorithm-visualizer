@@ -1,123 +1,82 @@
 @use '../styles/color-variables' as *;
 
-.title-row {
-	height: 3.5rem;
-}
-
 .main {
-	flex: 1;
-	align-items: stretch;
-}
-
-.sidenav {
-	width: 250px;
-	flex-shrink: 0;
-	border-radius: 0;
-	padding: 0;
+	height: 100vh; /* Enforces full screen height as the boundary */
+	overflow: hidden;
 }
 
 .content {
 	flex: 1;
+	height: 100%;
 	background-color: $bg-carbon;
 	gap: 1rem;
 	padding: 2rem 2rem 1rem;
 	min-width: 0;
-}
-
-.subtitle {
-	text-transform: uppercase;
-	font-size: 0.7rem;
-	font-weight: 900;
-	letter-spacing: 2.5px;
-	color: #a1a1a1;
-}
-
-.algorithm-title {
-	font-size: 1.7rem;
-	color: #f8f8f8;
-	letter-spacing: 1.25px;
-	font-family: sans-serif;
-	margin-top: -0.75rem;
-}
-
-h3 {
-	margin: 0.2rem 0.5rem 0.5rem;
+	min-height: 0; /* Prevents children from expanding this container */
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
 }
 
 .controls {
-	min-height: 4rem;
+	height: 4rem;
+	flex-shrink: 0; /* Prevents controls from collapsing */
 }
 
+/* --- LOCKED 55% VISUALIZER ROW --- */
 .visualizer-row {
 	display: flex;
 	gap: 1rem;
-	flex: 1;
-	flex-wrap: wrap;
+	align-items: stretch;
+	height: 55%; /* LOCKED: Exactly 55% of content height */
+	max-height: 55%; /* Hard cap so content changes cannot expand it */
+	flex-shrink: 0; /* Prevents row from squeezing or expanding */
+	min-height: 0;
 
 	.graph {
-		flex: 4;
-		aspect-ratio: 21 / 9;
 		width: 75%;
+		height: 100%;
+		min-height: 0;
+		overflow: hidden; /* Truncates anything that tries to push boundaries */
+
+		app-visualizer {
+			display: block;
+			width: 100%;
+			height: 100%;
+			min-height: 0;
+		}
 	}
 
 	.algorithm-details {
-		flex: 3;
+		width: 25%;
+		height: 100%;
+		min-height: 0;
+		overflow: auto;
 	}
 }
 
 .data-log {
 	display: flex;
 	gap: 1rem;
-	height: 11.3rem;
+	flex: 1; /* Takes the remaining space below 55% */
+	min-height: 0;
 	box-sizing: border-box;
 }
 
-.execution-log {
-	width: 60%;
-	height: 90%;
-	display: grid;
-	grid-template-rows: auto 1fr;
-	overflow: hidden;
-
-	h3 {
-		margin: 0.2rem 0.5rem 0.5rem;
-	}
-
-	app-execution-log {
-		min-height: 0;
-		height: 100%;
-
-		overflow: hidden;
-	}
-}
-
-.data-structure {
-	width: 40%;
-}
-
-app-details {
-	display: block;
-	height: 100%;
-}
-
-img {
-	width: 5.3rem;
-	margin: 0 1.5rem;
-}
-
 @media screen and (max-width: 1064px) {
-	.visualizer-row {
-		flex-direction: column;
+	.main {
+		height: auto;
+		overflow: auto;
 	}
+	.visualizer-row {
+		height: 350px;
+		max-height: none;
+		flex-direction: column;
 
-	.visualizer-row .graph {
-		flex: 1;
-		aspect-ratio: 17 / 15;
-		width: auto;
+		.graph,
+		.algorithm-details {
+			width: 100%;
+			height: 100%;
+		}
 	}
 }
-
-/** TO DO 
-1. Layout responsivity
-2. Clean up
-*/
