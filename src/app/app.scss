@@ -50,9 +50,10 @@ h3 {
 }
 
 .controls {
-	height: 4rem;
+	min-height: 4rem;
 	flex-shrink: 0;
 }
+
 .visualizer-row {
 	display: flex;
 	gap: 1rem;
@@ -130,8 +131,12 @@ img {
 		height: auto;
 		overflow: auto;
 	}
+
+	.controls {
+		width: 100%;
+	}
+
 	.visualizer-row {
-		height: 350px;
 		max-height: none;
 		flex-direction: column;
 
@@ -140,6 +145,16 @@ img {
 			width: 100%;
 			height: 100%;
 		}
+	}
+
+	.data-log {
+		flex-direction: column;
+	}
+
+	.data-structure,
+	.execution-log {
+		height: 20rem;
+		width: 100%;
 	}
 }
 
