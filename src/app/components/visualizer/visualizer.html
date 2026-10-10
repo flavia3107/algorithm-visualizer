@@ -9,7 +9,7 @@
 		<ng-container *ngTemplateOutlet="array1dTemplate" />
 		}
 		@case ('graphs') {
-		<div class="canvas-container flex-row middle">
+		<div class="canvas-container flex-row middle center">
 			<canvas #gridCanvas width="750" height="300"></canvas>
 		</div>
 		}
@@ -26,7 +26,7 @@
 </div>
 
 <ng-template #array1dTemplate>
-	<div class="svg-container flex-row middle">
+	<div class="svg-container flex-row middle center">
 		@if (manager.currentStep(); as step) {
 		<svg viewBox="0 0 800 300" preserveAspectRatio="none">
 			@for (value of arrayData(); track $index) {
