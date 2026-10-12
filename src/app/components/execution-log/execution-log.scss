@@ -1,3 +1,5 @@
+@use '../../../styles/color-variables' as *;
+
 :host {
 	display: grid;
 	grid-template-rows: 1fr;
@@ -11,6 +13,8 @@
 	min-height: 0;
 	overflow-y: auto;
 	scroll-behavior: smooth;
+	background-color: $bg-carbon;
+	border-radius: 5px;
 }
 
 p {
