@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { ComplexityInfo } from './components/complexity-info/complexity-info';
 import { Controls } from './components/controls/controls';
 import { DataStructure } from './components/data-structure/data-structure';
 import { Details } from './components/details/details';
@@ -9,7 +10,7 @@ import { AlgorithmManager } from './services/algorithm-manager';
 
 @Component({
   selector: 'app-root',
-  imports: [Controls, DataStructure, Details, ExecutionLog, Sidenav, Visualizer],
+  imports: [Controls, DataStructure, Details, ExecutionLog, Sidenav, Visualizer, ComplexityInfo],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
