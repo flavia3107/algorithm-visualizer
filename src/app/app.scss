@@ -91,10 +91,10 @@ h3 {
 
 .execution-log {
 	width: 40%;
-	height: 95%;
 	display: grid;
 	grid-template-rows: auto 1fr;
 	overflow: hidden;
+	padding: 0.5rem 0 0;
 
 	h3 {
 		margin: 0.2rem 0.5rem 0.5rem;
@@ -103,7 +103,6 @@ h3 {
 	app-execution-log {
 		min-height: 0;
 		height: 100%;
-
 		overflow: hidden;
 	}
 }
@@ -111,7 +110,7 @@ h3 {
 .data-structure,
 .complexity {
 	width: 33%;
-	height: 95%;
+	box-sizing: border-box;
 }
 
 app-details {
