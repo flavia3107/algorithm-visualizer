@@ -5,7 +5,7 @@
 }
 
 .main {
-	height: 93vh;
+	height: 100%;
 	overflow: hidden;
 }
 
@@ -25,6 +25,7 @@
 	min-width: 0;
 	min-height: 0;
 	box-sizing: border-box;
+	overflow: auto;
 }
 
 .subtitle {
@@ -89,8 +90,8 @@ h3 {
 }
 
 .execution-log {
-	width: 60%;
-	height: 90%;
+	width: 40%;
+	height: 95%;
 	display: grid;
 	grid-template-rows: auto 1fr;
 	overflow: hidden;
@@ -107,9 +108,10 @@ h3 {
 	}
 }
 
-.data-structure {
-	width: 40%;
-	height: 90%;
+.data-structure,
+.complexity {
+	width: 33%;
+	height: 95%;
 }
 
 app-details {
@@ -123,8 +125,9 @@ img {
 }
 
 @media screen and (max-width: 1064px) {
-	.main {
-		height: auto;
+	.main,
+	.content {
+		height: fit-content;
 		overflow: auto;
 	}
 
@@ -148,7 +151,8 @@ img {
 	}
 
 	.data-structure,
-	.execution-log {
+	.execution-log,
+	.complexity {
 		height: 20rem;
 		width: auto;
 	}

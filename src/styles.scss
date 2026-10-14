@@ -9,12 +9,14 @@ body {
 	min-height: 100dvh;
 	color: $main-text-color;
 	font-family: "Roboto", serif;
+	height: 100vh;
 }
 
 app-root {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+	height: 100vh;
 }
 
 body {
