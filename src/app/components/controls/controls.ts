@@ -14,4 +14,8 @@ export class Controls {
   public playOrStopAlgorithm() {
     this._manager.togglePlay();
   }
+
+  public stepForward() {
+    this._manager.stepForward();
+  }
 }
