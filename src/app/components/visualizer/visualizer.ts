@@ -1,7 +1,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, effect, ElementRef, inject, untracked, ViewChild } from '@angular/core';
 import { VisualizationStep } from '../../../configs/algorithm-config';
-import { ALGORITHM_MAP } from '../../helpers/algorithm-logic';
+import { ALGORITHM_MAP, generateInitialDataFor } from '../../helpers/algorithm-logic';
 import { AlgorithmManager } from '../../services/algorithm-manager';
 
 @Component({
@@ -37,7 +37,7 @@ export class Visualizer {
       const algorithmFn = ALGORITHM_MAP[activeKey];
 
       if (algorithmFn) {
-        const initialData = this.manager.generateInitialDataFor(activeKey, size);
+        const initialData = generateInitialDataFor(activeKey, size);
         const generatedSteps = algorithmFn(initialData);
         untracked(() => {
           this.manager.pause();

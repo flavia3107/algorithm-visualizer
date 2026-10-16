@@ -37,18 +37,6 @@ export class AlgorithmManager {
     this._activeAlgorithm.set(currentAlgorthm);
   }
 
-  registerStrategy(key: string, strategy: VisualizerStrategy): void {
-    this._strategies.set(key, strategy);
-    if (this._activeAlgorithm() === key) this.resetData();
-  }
-
-  selectAlgorithm(algorithmKey: string): void {
-    if (!this._strategies.has(algorithmKey)) return;
-    this.pause();
-    this._activeAlgorithm.set(algorithmKey);
-    this.resetData();
-  }
-
   resetData(): void {
     this.pause();
     const strategy = this.activeStrategy();
@@ -100,14 +88,6 @@ export class AlgorithmManager {
     if (this.currentStepIndex() > 0) this.currentStepIndex.update((idx) => idx - 1);
   }
 
-  loadAndPlay(newSteps: VisualizationStep[]): void {
-    this.pause();
-    const desc = newSteps[0]?.description, type = newSteps[0]?.type;
-    this.steps.set(newSteps.map((s) => ({ ...s, description: desc, type })));
-    this.currentStepIndex.set(0);
-    this.play();
-  }
-
   private scheduleNextFrame(): void {
     if (!this.isPlaying()) return;
 
@@ -117,31 +97,5 @@ export class AlgorithmManager {
         this.scheduleNextFrame();
       } else this.pause();
     }, this.speedMs());
-  }
-
-  public generateInitialDataFor(algoKey: string, size: number): any {
-    if (['bubble_sort', 'selection_sort', 'merge_sort'].includes(algoKey)) {
-      return Array.from({ length: size }, (_, i) => i + 1).sort(() => Math.random() - 0.5);
-    }
-
-    if (['binary_search', 'linear_search'].includes(algoKey)) {
-      const list = Array.from({ length: size }, (_, i) => (i + 1) * 2);
-      return { list, target: list[Math.floor(Math.random() * list.length)] };
-    }
-
-    if (['dijkstra', 'breadth_first_search', 'depth_first_search', 'a_star'].includes(algoKey)) {
-      return Array.from({ length: 10 }, (_, r) =>
-        Array.from({ length: 25 }, (_, c) => {
-          const isStart = r === 2 && c === 2, isTarget = r === 7 && c === 22;
-          return {
-            row: r, col: c, isStart, isTarget,
-            isWall: !isStart && !isTarget && Math.random() < 0.2,
-            isVisited: false, isPath: false, distance: Infinity, previousNode: null
-          };
-        })
-      );
-    }
-
-    return [];
   }
 }
