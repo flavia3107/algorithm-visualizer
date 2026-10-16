@@ -18,4 +18,8 @@ export class Controls {
   public stepForward() {
     this._manager.stepForward();
   }
+
+  public stepBackward() {
+    this._manager.stepBackward();
+  }
 }
