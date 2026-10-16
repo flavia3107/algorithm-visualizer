@@ -11,8 +11,10 @@
 
 	<div class="pseudocode section">
 		<h3>Pseudocode</h3>
-		<pre>
-			{{algorithm.pseudocode | pseudocodeFormat}}
-		</pre>
+		<div class="pseudocode-container flex-column">
+			@for(line of algorithm.pseudocodeLines; track line.text){
+			<span [style.padding-left.rem]="line.indent * 1.5"> {{ line.text }}</span>
+			}
+		</div>
 	</div>
 </div>
