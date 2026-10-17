@@ -88,6 +88,11 @@ export class AlgorithmManager {
     if (this.currentStepIndex() > 0) this.currentStepIndex.update((idx) => idx - 1);
   }
 
+  skipToEnd(): void {
+    if (this.isPlaying()) this.pause();
+    if (this.currentStepIndex() > 0) this.currentStepIndex.update((idx) => this.steps().length - 1);
+  }
+
   private scheduleNextFrame(): void {
     if (!this.isPlaying()) return;
 

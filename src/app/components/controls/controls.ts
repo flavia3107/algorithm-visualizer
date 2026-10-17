@@ -22,4 +22,8 @@ export class Controls {
   public stepBackward() {
     this._manager.stepBackward();
   }
+
+  public skipToEnd() {
+    this._manager.skipToEnd();
+  }
 }
