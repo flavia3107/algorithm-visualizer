@@ -11,7 +11,7 @@ export class AlgorithmManager {
   private _timerId: ReturnType<typeof setTimeout> | null = null;
   public activeView = computed(() => ALGORITHM_CONFIG[this._activeAlgorithm()]);
 
-  readonly currentDataSize = signal<number>(20);
+  readonly currentDataSize = signal<number>(50);
   readonly speedMs = signal<number>(100);
   readonly steps = signal<VisualizationStep[]>([]);
   readonly currentStepIndex = signal<number>(0);
@@ -23,6 +23,7 @@ export class AlgorithmManager {
     const idx = this.currentStepIndex();
     return s.length > 0 && idx < s.length ? s[idx] : null;
   });
+
   readonly isCompleted = computed(() => {
     const s = this.steps();
     return s.length > 0 && this.currentStepIndex() === s.length - 1;
@@ -33,8 +34,8 @@ export class AlgorithmManager {
     return Array.isArray(data) ? data : data?.list ?? [];
   });
 
-  public updateActiveAlgorithm(currentAlgorthm: string) {
-    this._activeAlgorithm.set(currentAlgorthm);
+  public updateActiveAlgorithm(currentAlgorithm: string) {
+    this._activeAlgorithm.set(currentAlgorithm);
   }
 
   resetData(): void {
@@ -52,12 +53,6 @@ export class AlgorithmManager {
 
   setSpeed(ms: number): void {
     this.speedMs.set(ms);
-  }
-
-  setDataSize(size: number): void {
-    this.currentDataSize.set(size);
-    this.resetData();
-    console.log('HERE')
   }
 
   play(): void {
@@ -91,7 +86,12 @@ export class AlgorithmManager {
 
   skipToEnd(): void {
     if (this.isPlaying()) this.pause();
-    if (this.currentStepIndex() > 0) this.currentStepIndex.update((idx) => this.steps().length - 1);
+    if (this.steps().length > 0) this.currentStepIndex.set(this.steps().length - 1);
+  }
+
+  resetSteps(): void {
+    if (this.isPlaying()) this.pause();
+    this.currentStepIndex.set(0);
   }
 
   private scheduleNextFrame(): void {

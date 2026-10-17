@@ -27,7 +27,7 @@ export class Controls {
     this._manager.skipToEnd();
   }
 
-  public generateData() {
-    this._manager.setDataSize(100);
+  public resetSteps() {
+    this._manager.resetSteps();
   }
 }
