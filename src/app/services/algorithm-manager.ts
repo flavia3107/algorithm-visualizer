@@ -57,6 +57,7 @@ export class AlgorithmManager {
   setDataSize(size: number): void {
     this.currentDataSize.set(size);
     this.resetData();
+    console.log('HERE')
   }
 
   play(): void {

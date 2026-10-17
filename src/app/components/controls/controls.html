@@ -5,7 +5,7 @@
 		<span class="description">{{algorithm.summary}}</span>
 	</div>
 	<div class="controls flex-row middle">
-		<button class="flex-row middle btn">Generate Array</button>
+		<button (click)="generateData()" class="flex-row middle btn">Generate Array</button>
 		<button (click)="stepBackward()" class="flex-row middle btn">
 			<span class="material-icons-outlined"> first_page </span>
 			<span>Step Back</span>

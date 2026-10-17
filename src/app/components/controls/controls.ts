@@ -26,4 +26,8 @@ export class Controls {
   public skipToEnd() {
     this._manager.skipToEnd();
   }
+
+  public generateData() {
+    this._manager.setDataSize(100);
+  }
 }
