@@ -105,3 +105,4 @@ export class AlgorithmManager {
     }, this.speedMs());
   }
 }
+// to do: fix reset logic
