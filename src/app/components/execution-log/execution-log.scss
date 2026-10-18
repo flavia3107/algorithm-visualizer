@@ -15,8 +15,7 @@
 	background-color: $bg-carbon;
 	border-radius: 5px;
 	padding: 0.5rem;
-	display: flex;
-	flex-direction: column;
+	box-sizing: border-box;
 }
 
 p {
@@ -34,7 +33,6 @@ p.active {
 	font-size: 1.1rem;
 	color: #fff;
 	opacity: 1;
-	margin-bottom: 1rem;
 }
 
 .previous-steps-container {
@@ -50,6 +48,5 @@ p.active {
 	z-index: 10;
 }
 
-.final {
-	 margin-bottom: 1rem;
-}
+// .final {
+// }
