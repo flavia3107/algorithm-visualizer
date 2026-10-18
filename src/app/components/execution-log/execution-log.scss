@@ -8,29 +8,48 @@
 	overflow: hidden;
 }
 
-.steps {
+.steps-wrapper {
 	height: 100%;
 	min-height: 0;
-	overflow-y: auto;
-	scroll-behavior: smooth;
+	overflow: hidden;
 	background-color: $bg-carbon;
 	border-radius: 5px;
-	padding-bottom: 0.5rem;
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
 }
 
 p {
 	font-size: 0.9rem;
 	color: #d3d3d3;
-	margin: 0.5rem;
-}
-
-.active {
-	font-size: 1.1rem;
-	color: #fff;
-	font-weight: 600;
+	margin: 0.2rem 0;
 }
 
 p:first-of-type {
 	opacity: 0.5;
 	font-style: italic;
+}
+
+p.active {
+	font-size: 1.1rem;
+	color: #fff;
+	opacity: 1;
+	margin-bottom: 1rem;
+}
+
+.previous-steps-container {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+	scroll-behavior: smooth;
+}
+
+.current-step-container {
+	flex-shrink: 0;
+	background-color: $bg-carbon;
+	z-index: 10;
+}
+
+.final {
+	 margin-bottom: 1rem;
 }

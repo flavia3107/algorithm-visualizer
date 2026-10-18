@@ -1,8 +1,15 @@
-<div class="steps">
-	@for(step of steps(); track step) {
-	@if($index <= currentStepIndex() + 1) { 
-		@let isActive=$index===(currentStepIndex() + 1);
-		<p [class.active]="isActive">{{step.description}}</p>
-	}
-	}
+<div class="steps-wrapper flex-column">
+	<div class="previous-steps-container flex-column">
+		@for(step of steps(); track step) {
+		@if($index < currentStepIndex() + 1) { <p [class.final]="step.description.includes('complete')">
+			{{ step.description }}
+			</p>
+			}
+			}
+	</div>
+	<div class="current-step-container">
+		@if (steps()[currentStepIndex() + 1]; as activeStep) {
+		<p class="active">{{ activeStep.description }}</p>
+		}
+	</div>
 </div>
