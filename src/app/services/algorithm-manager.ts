@@ -90,7 +90,7 @@ export class AlgorithmManager {
   }
 
   resetSteps(): void {
-    if (this.isPlaying()) this.pause();
+    this.pause();
     this.currentStepIndex.set(0);
   }
 
@@ -105,4 +105,3 @@ export class AlgorithmManager {
     }, this.speedMs());
   }
 }
-// to do: fix reset logic
