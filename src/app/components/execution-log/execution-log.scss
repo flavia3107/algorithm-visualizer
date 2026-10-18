@@ -22,15 +22,15 @@ p {
 	font-size: 0.9rem;
 	color: #d3d3d3;
 	margin: 0.2rem 0;
+	opacity: 0.5;
 }
 
 p:first-of-type {
-	opacity: 0.5;
 	font-style: italic;
 }
 
 p.active {
-	color: #fff;
+	color: #00f2ff;
 	opacity: 1;
 }
 
@@ -47,5 +47,8 @@ p.active {
 	z-index: 10;
 }
 
-// .final {
-// }
+.final {
+	font-size: 1rem;
+	color: #fff;
+	opacity: 1;
+}
