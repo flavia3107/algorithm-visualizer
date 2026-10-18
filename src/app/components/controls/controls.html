@@ -5,10 +5,9 @@
 		<span class="description">{{algorithm.summary}}</span>
 	</div>
 	<div class="controls flex-row middle">
-		<!-- <button (click)="generateData()" class="flex-row middle btn">Generate Array</button> -->
 		<button (click)="resetSteps()" class="flex-row middle btn">
+			<span class="material-icons-outlined reset"> restore </span>
 			<span>Reset</span>
-			<span class="material-icons-outlined"> fast_forward </span>
 		</button>
 		<button (click)="stepBackward()" class="flex-row middle btn">
 			<span class="material-icons-outlined"> first_page </span>
@@ -23,10 +22,8 @@
 			<span>Skip to End</span>
 			<span class="material-icons-outlined"> fast_forward </span>
 		</button>
-
 	</div>
 	<div class="size-controls">
-		<button>Forward</button>
 		<button>Skip to End</button>
 	</div>
 </div>
