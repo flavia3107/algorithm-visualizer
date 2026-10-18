@@ -13,7 +13,9 @@
 			<span class="material-icons-outlined"> first_page </span>
 			<span>Step Back</span>
 		</button>
-		<span (click)="playOrStopAlgorithm()" class="material-icons-outlined">play_arrow</span>
+		<span (click)="playOrStopAlgorithm()" class="material-icons-outlined">
+			{{isPlaying() ? 'pause': 'play_arrow'}}
+		</span>
 		<button (click)="stepForward()" class="flex-row middle btn">
 			<span> Step Forward </span>
 			<span class="material-icons-outlined"> last_page</span>

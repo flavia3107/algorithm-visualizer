@@ -10,6 +10,7 @@ import { AlgorithmManager } from '../../services/algorithm-manager';
 export class Controls {
   private _manager = inject(AlgorithmManager);
   readonly activeAlgorithm = this._manager.activeView;
+  readonly isPlaying = this._manager.isPlaying;
 
   public playOrStopAlgorithm() {
     this._manager.togglePlay();
