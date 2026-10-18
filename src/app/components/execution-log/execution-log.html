@@ -2,14 +2,14 @@
 	<div class="previous-steps-container flex-column">
 		@for(step of steps(); track step) {
 		@if($index < currentStepIndex() + 1) { <p [class.final]="step.description.includes('complete')">
-			[ {{currentTime() | date:'HH:mm:ss.SS'}} ] {{ step.description }}
+			[ {{currentTime() |date:'HH:mm:ss.SS':'UTC'}} ] {{ step.description }}
 			</p>
 			}
 			}
 	</div>
 	<div class="current-step-container">
 		@if (steps()[currentStepIndex() + 1]; as activeStep) {
-		<p class="active"> [ {{currentTime() | date:'HH:mm:ss.SS'}} ] {{ activeStep.description }}</p>
+		<p class="active"> [ {{currentTime() |date:'HH:mm:ss.SS':'UTC'}} ] {{ activeStep.description }}</p>
 		}
 	</div>
 </div>

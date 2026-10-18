@@ -1,9 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { AlgorithmManager } from '../../services/algorithm-manager';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { timer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { switchMap, interval, NEVER, scan, startWith } from 'rxjs';
+
 
 @Component({
   selector: 'app-execution-log',
@@ -16,7 +16,11 @@ export class ExecutionLog {
   readonly steps = this._manager.steps;
   readonly currentStepIndex = this._manager.currentStepIndex;
   readonly currentTime = toSignal(
-    timer(0, 100).pipe(map(() => new Date())),
-    { initialValue: new Date() }
+    toObservable(this._manager.isPlaying).pipe(
+      switchMap(running => running ? interval(50) : NEVER),
+      scan((acc) => acc + 50, 0),
+      startWith(0)
+    ),
+    { initialValue: 0 }
   );
 }
