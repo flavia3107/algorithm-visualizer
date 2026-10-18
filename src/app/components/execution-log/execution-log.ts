@@ -1,9 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { AlgorithmManager } from '../../services/algorithm-manager';
-import { toSignal, toObservable } from '@angular/core/rxjs-interop';
-import { switchMap, interval, NEVER, scan, startWith } from 'rxjs';
-
 
 @Component({
   selector: 'app-execution-log',
@@ -15,12 +12,16 @@ export class ExecutionLog {
   private _manager = inject(AlgorithmManager);
   readonly steps = this._manager.steps;
   readonly currentStepIndex = this._manager.currentStepIndex;
-  readonly currentTime = toSignal(
-    toObservable(this._manager.isPlaying).pipe(
-      switchMap(running => running ? interval(50) : NEVER),
-      scan((acc) => acc + 50, 0),
-      startWith(0)
-    ),
-    { initialValue: 0 }
-  );
+  readonly elapsedMs = signal(0);
+  readonly currentTime = computed(() => new Date(this.elapsedMs()));
+
+  constructor() {
+    effect((onCleanup) => {
+      if (this._manager.currentStepIndex() === 0) this.elapsedMs.set(0);
+      if (this._manager.isPlaying()) {
+        const timerId = setInterval(() => this.elapsedMs.update(t => t + 50), 50);
+        onCleanup(() => clearInterval(timerId));
+      }
+    });
+  }
 }
