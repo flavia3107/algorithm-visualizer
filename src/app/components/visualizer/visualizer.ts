@@ -61,8 +61,6 @@ export class Visualizer {
     });
   }
 
-
-
   getBarColor(index: number, step: VisualizationStep): string {
     if (step.completedIndices?.includes(index)) return '#a6e3a1';
     if (step.highlightIndices?.includes(index)) return '#f38ba8';
