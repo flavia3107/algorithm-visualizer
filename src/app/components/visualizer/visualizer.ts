@@ -13,52 +13,14 @@ import { AlgorithmManager } from '../../services/algorithm-manager';
 export class Visualizer {
   readonly manager = inject(AlgorithmManager);
   readonly arrayData = this.manager.logSteps;
+
+  readonly barWidth = computed(() => this._barWidth());
+  readonly scaleFactor = computed(() => this._scaleFactor());
   @ViewChild('gridCanvas') canvasRef?: ElementRef<HTMLCanvasElement>;
 
-  readonly barWidth = computed(() => {
-    const data = this.arrayData();
-    return data.length > 0 ? 800 / data.length : 0;
-  });
-
-  readonly scaleFactor = computed(() => {
-    const data = this.arrayData();
-    if (data.length === 0) return 1;
-    const maxVal = Math.max(...data, 1);
-    return 270 / maxVal;
-  });
-
   constructor() {
-    effect(() => {
-      const activeKey = this.manager.activeView()?.id;
-      const size = this.manager.currentDataSize();
-
-      if (!activeKey) return;
-
-      const algorithmFn = ALGORITHM_MAP[activeKey];
-
-      if (algorithmFn) {
-        const initialData = generateInitialDataFor(activeKey, size);
-        const generatedSteps = algorithmFn(initialData);
-        untracked(() => {
-          this.manager.pause();
-          this.manager.steps.set(generatedSteps);
-          this.manager.currentStepIndex.set(0);
-
-          queueMicrotask(() => {
-            this.manager.play();
-          });
-        });
-      }
-    });
-
-    effect(() => {
-      const category = this.manager.activeView()?.category;
-      const step = this.manager.currentStep();
-
-      if (category === 'graphs' && step && this.canvasRef) {
-        this.drawCanvasGrid(step.data);
-      }
-    });
+    effect(() => this._initiateAlg());
+    effect(() => this._drawCanvas());
   }
 
   getBarColor(index: number, step: VisualizationStep): string {
@@ -97,6 +59,46 @@ export class Visualizer {
         ctx.fillRect(c * cellW, r * cellH, cellW - 1, cellH - 1);
       }
     }
+  }
+
+  private _barWidth() {
+    const data = this.arrayData();
+    return data.length > 0 ? 800 / data.length : 0;
+  }
+
+  private _scaleFactor() {
+    const data = this.arrayData();
+    return (data.length === 0) ? 1 : (270 / (Math.max(...data, 1)));
+  }
+
+  private _initiateAlg() {
+    const activeKey = this.manager.activeView()?.id;
+    const size = this.manager.currentDataSize();
+
+    if (!activeKey) return;
+
+    const algorithmFn = ALGORITHM_MAP[activeKey];
+
+    if (algorithmFn) {
+      const initialData = generateInitialDataFor(activeKey, size);
+      const generatedSteps = algorithmFn(initialData);
+      untracked(() => {
+        this.manager.pause();
+        this.manager.steps.set(generatedSteps);
+        this.manager.currentStepIndex.set(0);
+
+        queueMicrotask(() => {
+          this.manager.play();
+        });
+      });
+    }
+  }
+
+  private _drawCanvas() {
+    const category = this.manager.activeView()?.category;
+    const step = this.manager.currentStep();
+
+    if (category === 'graphs' && step && this.canvasRef) this.drawCanvasGrid(step.data);
   }
 }
 
