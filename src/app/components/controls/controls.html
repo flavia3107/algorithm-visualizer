@@ -26,12 +26,9 @@
 		</button>
 		<div class="size-controls speed-control-wrapper">
 			<span class="material-icons-outlined speed-icon">speed</span>
-			<input type="range" min="10" max="500" step="10" [value]="speedDelayMs()"
+			<input type="range" min="10" max="200" step="10" [value]="speedDelayMs()"
 				(input)="setSpeed($event.target.value)" class="speed-range" title="Execution Speed" />
 			<span class="speed-value">{{ speedDelayMs() }}ms</span>
 		</div>
 	</div>
 </div>
-
-<!-- TO DO -->
-<!-- implement speed control -->
