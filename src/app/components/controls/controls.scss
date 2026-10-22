@@ -17,36 +17,24 @@
 	margin: 0 0.25rem 0 -0.25rem;
 }
 
-.speed-control-wrapper {
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	background-color: #2a2a2d; /* Matches your .btn or card background */
-	border: 1px solid #3d3d42;
-	border-radius: 6px;
-	padding: 0 10px;
-	height: 36px;
-	color: #e0e0e0;
-}
-
-.speed-control-wrapper .speed-icon {
+.speed-icon {
 	font-size: 18px;
 	color: #a0a0ab;
 }
 
-.speed-control-wrapper .speed-range {
+.speed-range {
 	width: 90px;
 	height: 4px;
 	background: #3f3f46;
 	border-radius: 2px;
-	accent-color: #3b82f6;
+	accent-color: #09cece;
 	cursor: pointer;
 }
 
-.speed-control-wrapper .speed-value {
+.speed-value {
 	font-size: 12px;
 	font-family: monospace;
-	color: #38bdf8;
+	color: #d3d3d3;
 	min-width: 42px;
 	text-align: right;
 }

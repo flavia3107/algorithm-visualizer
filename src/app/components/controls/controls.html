@@ -24,7 +24,7 @@
 			<span>Skip to End</span>
 			<span class="material-icons-outlined"> fast_forward </span>
 		</button>
-		<div class="size-controls speed-control-wrapper">
+		<div class="size-controls speed-control-wrapper btn">
 			<span class="material-icons-outlined speed-icon">speed</span>
 			<input type="range" min="10" max="200" step="10" [value]="speedDelayMs()"
 				(input)="setSpeed($event.target.value)" class="speed-range" title="Execution Speed" />
