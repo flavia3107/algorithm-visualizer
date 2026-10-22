@@ -11,6 +11,7 @@ export class Controls {
   private _manager = inject(AlgorithmManager);
   readonly activeAlgorithm = this._manager.activeView;
   readonly isPlaying = this._manager.isPlaying;
+  public speedDelayMs = this._manager.speedMs;
 
   public playOrStopAlgorithm() {
     this._manager.togglePlay();
@@ -30,5 +31,9 @@ export class Controls {
 
   public resetSteps() {
     this._manager.resetSteps();
+  }
+
+  public setSpeed(value: string) {
+    this._manager.setSpeed(+value);
   }
 }
