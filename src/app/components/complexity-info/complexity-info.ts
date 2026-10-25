@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AlgorithmManager } from '../../services/algorithm-manager';
 
 @Component({
   selector: 'app-complexity-info',
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './complexity-info.html',
   styleUrl: './complexity-info.scss',
 })
-export class ComplexityInfo {}
+export class ComplexityInfo {
+  private _manager = inject(AlgorithmManager);
+  readonly activeAlgorithm = this._manager.activeView;
+}
