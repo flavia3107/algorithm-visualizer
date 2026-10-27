@@ -9,6 +9,8 @@ export interface VisualizationStep<T = any> {
 	description: string;
 }
 
+export const COMPLEXITY_CONFIG: ('best' | 'average' | 'worst')[] = ['best', 'average', 'worst'];
+
 export type VisualizerCategory = 'sorting' | 'searching' | 'graph';
 
 export interface AlgorithmMetadata {

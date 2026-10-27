@@ -2,10 +2,10 @@
 <div class="flex-column">
 	<div class="details">
 		<h5> Time Complexity</h5>
-		<div class="complexity-details flex-row">
-			<p class="flex-column"><strong>Best</strong><span>{{algorithm.timeComplexity.best}}</span></p>
-			<p class="flex-column"><strong>average</strong><span>{{algorithm.timeComplexity.average}}</span></p>
-			<p class="flex-column"> <strong>worst</strong> <span>{{algorithm.timeComplexity.worst}}</span></p>
+		<div class="complexity-details flex-row space_between">
+			@for(item of complexityItem; track item) {
+			<p class="flex-column"><strong>{{item}}</strong><span>{{algorithm.timeComplexity[item]}}</span></p>
+			}
 		</div>
 	</div>
 
