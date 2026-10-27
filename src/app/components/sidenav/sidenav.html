@@ -4,7 +4,7 @@
 
 	<ul class="flex-column">
 		@for (algorithm of group.value; track algorithm.key) {
-		<li class="flex-row middle space_between" (click)="updateView(algorithm.key)">
+		<li class="flex-row middle space-between" (click)="updateView(algorithm.key)">
 			<p class="flex-row middle">
 				<span class="material-icons-outlined" [class.rotate]="algorithm?.rotate">{{algorithm.icon}}</span>
 				{{ algorithm.title }}
