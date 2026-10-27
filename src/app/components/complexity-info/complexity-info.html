@@ -2,12 +2,11 @@
 <div class="flex-column">
 	<div class="details">
 		<h5> Time Complexity</h5>
-		<p class="complexity-details flex-column">
-			<span><strong>Best</strong>{{algorithm.timeComplexity.best}}</span>
-			<span><strong>average</strong>{{algorithm.timeComplexity.average}}</span>
-			<span><strong>worst</strong>{{algorithm.timeComplexity.worst}}</span>
-
-		</p>
+		<div class="complexity-details flex-row">
+			<p class="flex-column"><strong>Best</strong><span>{{algorithm.timeComplexity.best}}</span></p>
+			<p class="flex-column"><strong>average</strong><span>{{algorithm.timeComplexity.average}}</span></p>
+			<p class="flex-column"> <strong>worst</strong> <span>{{algorithm.timeComplexity.worst}}</span></p>
+		</div>
 	</div>
 
 	<div class="pseudocode">
