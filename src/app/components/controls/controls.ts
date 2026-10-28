@@ -3,7 +3,6 @@ import { AlgorithmManager } from '../../services/algorithm-manager';
 
 @Component({
   selector: 'app-controls',
-  imports: [],
   templateUrl: './controls.html',
   styleUrl: './controls.scss',
 })

@@ -4,7 +4,6 @@ import { AlgorithmManager } from '../../services/algorithm-manager';
 
 @Component({
   selector: 'app-complexity-info',
-  imports: [],
   templateUrl: './complexity-info.html',
   styleUrl: './complexity-info.scss',
 })
