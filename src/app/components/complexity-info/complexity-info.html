@@ -1,17 +1,17 @@
 @let algorithm = activeAlgorithm();
-<div class="flex-column">
+<div class="flex-column main-container">
 	<div class="details">
 		<h5> Time Complexity</h5>
 		<div class="complexity-details flex-row space-between">
 			@for(item of complexityItem; track item) {
-			<p class="flex-column"><strong>{{item}}</strong><span>{{algorithm.timeComplexity[item]}}</span></p>
+			<p class="flex-column item"><strong>{{item}}</strong><span>{{algorithm.timeComplexity[item]}}</span></p>
 			}
 		</div>
 	</div>
 
 	<div class="pseudocode">
 		<h5>Space Complexity</h5>
-		<p class="complexity-details">
+		<p class="complexity-details item">
 			{{algorithm.spaceComplexity}}
 		</p>
 	</div>

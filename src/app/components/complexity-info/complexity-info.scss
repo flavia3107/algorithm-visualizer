@@ -7,4 +7,23 @@ h5 {
 
 strong {
 	text-transform: capitalize;
+	font-size: 0.8rem;
+}
+
+.complexity-details,
+h5 {
+	padding: 0 0.5rem;
+}
+
+.item {
+	margin: 0.5rem 0;
+	gap: 0.25rem;
+}
+
+.main-container {
+	gap: 0.7rem;
+}
+
+.complexity-details.item {
+	margin: 0;
 }
