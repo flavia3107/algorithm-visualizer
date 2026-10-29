@@ -2,16 +2,16 @@
 <div class="flex-column main-container">
 	<div class="pseudocode">
 		<h5>Space Complexity</h5>
-		<p class="complexity-details item value">
-			{{algorithm.spaceComplexity}}
+		<p class="complexity-details item">
+			<span class="value">{{algorithm.spaceComplexity}}</span>
 		</p>
 	</div>
 	<div class="details">
 		<h5> Time Complexity</h5>
 		<div class="complexity-details flex-row space-between">
 			@for(item of complexityItem; track item) {
-			<p class="flex-column item">
-				<strong>{{item}}</strong>
+			<p class="flex-row item middle">
+				<label>{{item}}: </label>
 				<span class="value">{{algorithm.timeComplexity[item]}}</span>
 			</p>
 			}
