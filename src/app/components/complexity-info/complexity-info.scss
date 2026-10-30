@@ -1,6 +1,5 @@
 h5 {
 	text-transform: uppercase;
-	opacity: 0.5;
 	letter-spacing: 1px;
 	margin: 0;
 }
@@ -25,14 +24,20 @@ h5 {
 
 .value {
 	color: #09cece;
+	font-size: 0.8rem;
 }
 
 .main-container {
 	gap: 1.5rem;
 	overflow: auto;
-	height: 75%;
+	height: 80%;
 }
 
 .complexity-details {
 	flex-wrap: wrap;
+	gap: 0 0.5rem;
+}
+
+.title {
+	opacity: 0.5;
 }
