@@ -29,4 +29,10 @@ h5 {
 
 .main-container {
 	gap: 1.5rem;
+	overflow: auto;
+	height: 75%;
+}
+
+.complexity-details {
+	flex-wrap: wrap;
 }
