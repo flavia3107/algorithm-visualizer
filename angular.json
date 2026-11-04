@@ -40,7 +40,8 @@
             },
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "outputPath": "dist/algorithm-visualizer"
           },
           "configurations": {
             "production": {
