@@ -33,10 +33,6 @@
             "styles": [
               "src/styles.scss"
             ],
-            "outputMode": "static",
-            "security": {
-              "allowedHosts": []
-            },
             "outputPath": "dist/algorithm-visualizer"
           },
           "configurations": {
