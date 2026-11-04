@@ -1,9 +1,5 @@
 @let algorithm = activeAlgorithm();
 <div class="flex-column main-container ">
-	<h5 class="flex-row space-between">
-		<span class="title">Space Complexity:</span>
-		<span class="value">{{algorithm.spaceComplexity}}</span>
-	</h5>
 	<div class="details">
 		<h5 class="title"> Time Complexity</h5>
 		<div class="complexity-details flex-row space-between">
@@ -15,4 +11,8 @@
 			}
 		</div>
 	</div>
+	<h5 class="flex-column space-between">
+		<span class="title">Space Complexity:</span>
+		<span class="value">{{algorithm.spaceComplexity}}</span>
+	</h5>
 </div>
