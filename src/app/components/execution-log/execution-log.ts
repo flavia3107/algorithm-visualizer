@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, effect, inject, signal } from '@angular/core';
+import { CustomTimestampPipe } from '../../../shared/pipes/custom-timestamp-pipe';
 import { AlgorithmManager } from '../../services/algorithm-manager';
 
 @Component({
   selector: 'app-execution-log',
-  imports: [DatePipe],
+  imports: [DatePipe, CustomTimestampPipe],
   templateUrl: './execution-log.html',
   styleUrl: './execution-log.scss',
 })

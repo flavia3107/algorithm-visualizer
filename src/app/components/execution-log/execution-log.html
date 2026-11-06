@@ -2,7 +2,7 @@
 	<div class="previous-steps-container flex-column">
 		@for (step of steps(); track step; let idx = $index) {
 		@if (idx < currentStepIndex() + 1) { <p [class.final]="step.description.includes('complete')">
-			[ {{ getStepTime(idx) | date:'HH:mm:ss.SS':'UTC' }} ] {{ step.description }}
+			[ {{stepTimestamps()[idx] | customTimestamp | date:'HH:mm:ss.SS':'UTC' }} ] {{ step.description }}
 			</p>
 			}
 			}
