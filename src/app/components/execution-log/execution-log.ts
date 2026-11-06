@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, EffectCleanupFn, inject, signal } from '@angular/core';
 import { CustomTimestampPipe } from '../../../shared/pipes/custom-timestamp-pipe';
 import { AlgorithmManager } from '../../services/algorithm-manager';
 
@@ -18,25 +18,22 @@ export class ExecutionLog {
   readonly globalTime = computed(() => new Date(this.elapsedMs()));
 
   constructor() {
-    effect((onCleanup) => {
-      if (this._manager.currentStepIndex() === 0) {
-        this.elapsedMs.set(0);
-        this.stepTimestamps.set({ 0: 0 });
-      }
-
-      if (this._manager.isPlaying()) {
-        const timerId = setInterval(() => {
-          this.elapsedMs.update(t => t + 50);
-          const currentIndex = this._manager.currentStepIndex();
-          this.stepTimestamps.update(timestamps => (timestamps[currentIndex] === undefined) ? { ...timestamps, [currentIndex]: this.elapsedMs() } : timestamps);
-        }, 50);
-        onCleanup(() => clearInterval(timerId));
-      }
-    });
+    effect((onCleanup) => this._timerCalculation(onCleanup));
   }
 
-  getStepTime(index: number): Date {
-    const ms = this.stepTimestamps()[index] ?? 0;
-    return new Date(ms);
+  private _timerCalculation(onCleanup: { (cleanupFn: EffectCleanupFn): void; (arg0: () => void): void; }) {
+    if (this._manager.currentStepIndex() === 0) {
+      this.elapsedMs.set(0);
+      this.stepTimestamps.set({ 0: 0 });
+    }
+
+    if (this._manager.isPlaying()) {
+      const timerId = setInterval(() => {
+        this.elapsedMs.update(t => t + 50);
+        const currentIndex = this._manager.currentStepIndex();
+        this.stepTimestamps.update(timestamps => (timestamps[currentIndex] === undefined) ? { ...timestamps, [currentIndex]: this.elapsedMs() } : timestamps);
+      }, 50);
+      onCleanup(() => clearInterval(timerId));
+    }
   }
 }
