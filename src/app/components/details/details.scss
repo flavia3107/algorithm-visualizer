@@ -8,10 +8,7 @@
 	min-height: 0;
 }
 
-.details,
-.pseudocode {
-	display: flex;
-	flex-direction: column;
+.section {
 	flex: 1;
 	min-height: 0;
 }
@@ -35,8 +32,6 @@ li {
 }
 
 .pseudocode-container {
-	display: flex;
-	flex-direction: column;
 	height: calc(100% - 2.5rem);
 	overflow-y: auto;
 	background: $bg-carbon;

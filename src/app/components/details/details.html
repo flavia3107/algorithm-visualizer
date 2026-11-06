@@ -1,6 +1,6 @@
 @let algorithm = activeAlgorithm();
 <div class="flex-column details-container">
-	<div class="details section">
+	<div class="section flex-column">
 		<h3> {{algorithm.name}} Steps</h3>
 		<ol>
 			@for(step of algorithm.steps; track step.stepNumber) {
@@ -9,7 +9,7 @@
 		</ol>
 	</div>
 
-	<div class="pseudocode section">
+	<div class="section flex-column">
 		<h3>Pseudocode</h3>
 		<div class="pseudocode-container flex-column">
 			@for(line of algorithm.pseudocodeLines; track line.text){
@@ -18,5 +18,3 @@
 		</div>
 	</div>
 </div>
-
-<!-- to do: responsivity -->
