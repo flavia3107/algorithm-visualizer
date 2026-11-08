@@ -1,6 +1,6 @@
 @for (group of algorithmConfig | keyvalue; track group.key) {
 <div class="list-section">
-	<p class="group-title">{{ group.key }}</p>
+	<p class="group-title">{{ sectionTitle[group.key] }}</p>
 
 	<ul class="flex-column">
 		@for (algorithm of group.value; track algorithm.key) {

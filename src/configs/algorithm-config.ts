@@ -13,6 +13,12 @@ export const COMPLEXITY_CONFIG: ('best' | 'average' | 'worst')[] = ['best', 'ave
 
 export type VisualizerCategory = 'sorting' | 'searching' | 'graph';
 
+export const CATEGORY_TITLES: { [key: string]: string } = {
+	sorting: 'Sort',
+	searching: 'Search',
+	graphs: 'Graph'
+}
+
 export interface AlgorithmMetadata {
 	id: string;
 	name: string;
