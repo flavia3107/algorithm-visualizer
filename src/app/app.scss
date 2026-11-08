@@ -164,5 +164,7 @@ img {
 @media screen and (max-width: 800px) {
 	.sidenav {
 		width: 65px;
+		position: sticky;
+		top: 0;
 	}
 }
