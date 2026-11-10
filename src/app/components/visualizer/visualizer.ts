@@ -105,6 +105,5 @@ export class Visualizer {
 
 /**
  * TO DO:
- * 1. Code clean up
  * 2. Add grid logic to service
  */
