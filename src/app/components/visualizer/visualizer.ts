@@ -1,6 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, effect, ElementRef, inject, untracked, ViewChild } from '@angular/core';
-import { VisualizationStep } from '../../../configs/algorithm-config';
 import { ALGORITHM_MAP, generateInitialDataFor } from '../../helpers/algorithm-logic';
 import { AlgorithmManager } from '../../services/algorithm-manager';
 
@@ -13,27 +12,9 @@ import { AlgorithmManager } from '../../services/algorithm-manager';
 export class Visualizer {
   readonly manager = inject(AlgorithmManager);
   readonly arrayData = this.manager.logSteps;
-
   readonly barWidth = computed(() => this._barWidth());
   readonly scaleFactor = computed(() => this._scaleFactor());
-
-  readonly bars = computed(() => {
-    const data = this.arrayData();
-    const step = this.manager.currentStep();
-
-    return data.map((value, index) => {
-      let color = '#89b4fa';
-      if (step?.completedIndices?.includes(index)) {
-        color = '#a6e3a1';
-      } else if (step?.highlightIndices?.includes(index)) {
-        color = '#f38ba8';
-      } else if (step?.activeIndices?.includes(index)) {
-        color = '#f9e2af';
-      }
-
-      return { value, color };
-    });
-  });
+  readonly bars = computed(() => this._barColorSetup());
 
   @ViewChild('gridCanvas') canvasRef?: ElementRef<HTMLCanvasElement>;
 
@@ -86,11 +67,9 @@ export class Visualizer {
   private _initiateAlg() {
     const activeKey = this.manager.activeView()?.id;
     const size = this.manager.currentDataSize();
-
     if (!activeKey) return;
 
     const algorithmFn = ALGORITHM_MAP[activeKey];
-
     if (algorithmFn) {
       const initialData = generateInitialDataFor(activeKey, size);
       const generatedSteps = algorithmFn(initialData);
@@ -98,10 +77,7 @@ export class Visualizer {
         this.manager.pause();
         this.manager.steps.set(generatedSteps);
         this.manager.currentStepIndex.set(0);
-
-        queueMicrotask(() => {
-          this.manager.play();
-        });
+        queueMicrotask(() => this.manager.play());
       });
     }
   }
@@ -112,11 +88,23 @@ export class Visualizer {
 
     if (category === 'graphs' && step && this.canvasRef) this.drawCanvasGrid(step.data);
   }
+
+  private _barColorSetup() {
+    const data = this.arrayData();
+    const step = this.manager.currentStep();
+
+    return data.map((value, index) => {
+      let color = '#89b4fa';
+      if (step?.completedIndices?.includes(index)) color = '#a6e3a1';
+      else if (step?.highlightIndices?.includes(index)) color = '#f38ba8';
+      else if (step?.activeIndices?.includes(index)) color = '#f9e2af';
+      return { value, color };
+    });
+  }
 }
 
 
 /**
  * TO DO:
  * 2. Add grid logic to service
- * 3. Remove function call from template
  */
