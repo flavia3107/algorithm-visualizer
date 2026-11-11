@@ -29,15 +29,15 @@
 	<div class="svg-container flex-row middle center">
 		@if (manager.currentStep(); as step) {
 		<svg viewBox="0 0 800 300" preserveAspectRatio="none">
-			@for (value of arrayData(); track $index) {
+			@for (bar of bars(); track $index) {
 			<g>
-				<rect [attr.x]="$index * barWidth()" [attr.y]="300 - (value * scaleFactor())"
-					[attr.width]="barWidth() - 2" [attr.height]="value * scaleFactor()"
-					[attr.fill]="getBarColor($index, step)" class="bar" />
+				<rect [attr.x]="$index * barWidth()" [attr.y]="300 - (bar.value * scaleFactor())"
+					[attr.width]="barWidth() - 2" [attr.height]="bar.value * scaleFactor()" [attr.fill]="bar.color"
+					class="bar" />
 				@if (barWidth() > 20) {
-				<text [attr.x]="$index * barWidth() + (barWidth() - 2) / 2" [attr.y]="290 - (value * scaleFactor())"
+				<text [attr.x]="$index * barWidth() + (barWidth() - 2) / 2" [attr.y]="290 - (bar.value * scaleFactor())"
 					text-anchor="middle" fill="#cdd6f4" font-size="11">
-					{{ value }}
+					{{ bar.value }}
 				</text>
 				}
 			</g>

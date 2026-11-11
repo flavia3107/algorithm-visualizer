@@ -16,18 +16,30 @@ export class Visualizer {
 
   readonly barWidth = computed(() => this._barWidth());
   readonly scaleFactor = computed(() => this._scaleFactor());
+
+  readonly bars = computed(() => {
+    const data = this.arrayData();
+    const step = this.manager.currentStep();
+
+    return data.map((value, index) => {
+      let color = '#89b4fa';
+      if (step?.completedIndices?.includes(index)) {
+        color = '#a6e3a1';
+      } else if (step?.highlightIndices?.includes(index)) {
+        color = '#f38ba8';
+      } else if (step?.activeIndices?.includes(index)) {
+        color = '#f9e2af';
+      }
+
+      return { value, color };
+    });
+  });
+
   @ViewChild('gridCanvas') canvasRef?: ElementRef<HTMLCanvasElement>;
 
   constructor() {
     effect(() => this._initiateAlg());
     effect(() => this._drawCanvas());
-  }
-
-  getBarColor(index: number, step: VisualizationStep): string {
-    if (step.completedIndices?.includes(index)) return '#a6e3a1';
-    if (step.highlightIndices?.includes(index)) return '#f38ba8';
-    if (step.activeIndices?.includes(index)) return '#f9e2af';
-    return '#89b4fa';
   }
 
   private drawCanvasGrid(gridData: any[][]): void {
