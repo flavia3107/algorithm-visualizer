@@ -106,4 +106,5 @@ export class Visualizer {
 /**
  * TO DO:
  * 2. Add grid logic to service
+ * 3. Remove function call from template
  */
