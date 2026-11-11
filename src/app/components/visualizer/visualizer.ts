@@ -102,9 +102,3 @@ export class Visualizer {
     });
   }
 }
-
-
-/**
- * TO DO:
- * 2. Add grid logic to service
- */
