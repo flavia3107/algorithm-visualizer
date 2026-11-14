@@ -1,0 +1,131 @@
+.ds-panel {
+	background: #1e1e2f;
+	border: 1px solid #2d2d44;
+	border-radius: 8px;
+	padding: 12px;
+	color: #fff;
+	height: 100%;
+	font-family: inherit;
+	box-sizing: border-box;
+}
+h4 {
+	margin: 0 0 8px 0;
+	font-size: 13px;
+	color: #a0a0b2;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+.ds-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	overflow-x: auto;
+	padding: 4px 0;
+}
+.queue-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+.ds-node {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+.node-badge {
+	background: #3b82f6;
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-weight: bold;
+	font-size: 12px;
+}
+.arrow {
+	color: #64748b;
+}
+
+.stack-col {
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 4px;
+	width: 100%;
+	max-height: 120px;
+	overflow-y: auto;
+}
+.ds-node-block {
+	background: #8b5cf6;
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+}
+
+.pq-list {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	width: 100%;
+	max-height: 120px;
+	overflow-y: auto;
+}
+.pq-item {
+	display: flex;
+	justify-content: space-between;
+	background: #27273a;
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	border-left: 3px solid #10b981;
+}
+
+.mini-array {
+	display: flex;
+	gap: 6px;
+}
+.array-cell {
+	background: #27273a;
+	border: 1px solid #3f3f56;
+	padding: 6px 8px;
+	border-radius: 4px;
+	text-align: center;
+	min-width: 32px;
+	position: relative;
+}
+.array-cell.active {
+	border-color: #ec4899;
+	background: rgba(236, 72, 153, 0.15);
+}
+.array-cell.highlight {
+	border-color: #f59e0b;
+	background: rgba(245, 158, 11, 0.15);
+}
+.array-cell.completed {
+	border-color: #10b981;
+	background: rgba(16, 185, 129, 0.15);
+}
+
+.cell-val {
+	display: block;
+	font-weight: bold;
+	font-size: 13px;
+}
+.cell-idx {
+	display: block;
+	font-size: 10px;
+	color: #94a3b8;
+}
+.pointer-tag {
+	position: absolute;
+	bottom: -18px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #ec4899;
+	color: white;
+	font-size: 9px;
+	padding: 1px 4px;
+	border-radius: 2px;
+	white-space: nowrap;
+}
+.text-muted {
+	color: #64748b;
+	font-size: 12px;
+	font-style: italic;
+}
