@@ -1,74 +1,69 @@
 @let algorithmId = activeAlgorithmId().id;
 @let graph = activeGraph();
 @let arrayData = activeArrayData();
-<div class="ds-panel">
-	<h4>Data Structure: {{ getPanelTitle() }}</h4>
 
-	<div class="ds-container">
-		<!-- 1. QUEUE VIEW (BFS) -->
-		@if (algorithmId === 'breadth_first_search') {
-		<div class="queue-row">
-			@if (graph.queue.length === 0) {
-			<span class="text-muted">Queue is empty</span>
-			} @else {
-			@for (node of graph.queue; track $index) {
-			<div class="ds-node">
-				<span class="node-badge">{{ node }}</span>
-				@if ($index < graph.queue.length - 1) { <span class="arrow">➔</span>
-					}
-			</div>
+<!-- 1. QUEUE VIEW (BFS) -->
+@if (algorithmId === 'breadth_first_search') {
+<div class="queue-row">
+	@if (graph.queue.length === 0) {
+	<span class="text-muted">Queue is empty</span>
+	} @else {
+	@for (node of graph.queue; track $index) {
+	<div class="ds-node">
+		<span class="node-badge">{{ node }}</span>
+		@if ($index < graph.queue.length - 1) { <span class="arrow">➔</span>
 			}
-			}
-		</div>
-		}
+	</div>
+	}
+	}
+</div>
+}
 
-		<!-- 2. STACK VIEW (DFS) -->
-		@else if (algorithmId === 'depth_first_search') {
-		<div class="stack-col">
-			@if (graph.stack.length === 0) {
-			<span class="text-muted">Stack is empty</span>
-			} @else {
-			@for (node of graph.stack; track $index) {
-			<div class="ds-node-block">
-				{{ node }} @if ($index === graph.stack.length - 1) { <small>(Top)</small> }
-			</div>
-			}
-			}
-		</div>
-		}
+<!-- 2. STACK VIEW (DFS) -->
+@else if (algorithmId === 'depth_first_search') {
+<div class="stack-col">
+	@if (graph.stack.length === 0) {
+	<span class="text-muted">Stack is empty</span>
+	} @else {
+	@for (node of graph.stack; track $index) {
+	<div class="ds-node-block">
+		{{ node }} @if ($index === graph.stack.length - 1) { <small>(Top)</small> }
+	</div>
+	}
+	}
+</div>
+}
 
-		<!-- 3. PRIORITY QUEUE VIEW (Dijkstra / A*) -->
-		@else if (algorithmId === 'dijkstra' || algorithmId === 'a_star') {
-		<div class="pq-list">
-			@if (graph.priorityQueue.length === 0) {
-			<span class="text-muted">Open set is empty</span>
-			} @else {
-			@for (item of graph.priorityQueue; track $index) {
-			<div class="pq-item">
-				<span class="node-id">Node {{ item.id }}</span>
-				<span class="node-cost">Cost: {{ item.cost }}</span>
-			</div>
-			}
-			}
-		</div>
-		}
+<!-- 3. PRIORITY QUEUE VIEW (Dijkstra / A*) -->
+@else if (algorithmId === 'dijkstra' || algorithmId === 'a_star') {
+<div class="pq-list">
+	@if (graph.priorityQueue.length === 0) {
+	<span class="text-muted">Open set is empty</span>
+	} @else {
+	@for (item of graph.priorityQueue; track $index) {
+	<div class="pq-item">
+		<span class="node-id">Node {{ item.id }}</span>
+		<span class="node-cost">Cost: {{ item.cost }}</span>
+	</div>
+	}
+	}
+</div>
+}
 
-		<!-- 4. DEFAULT ARRAY VIEW (Sorting / Searching using Indices) -->
-		@else {
-		<div class="mini-array">
-			@for (val of arrayData.arr; track $index) {
-			<div class="array-cell" [class.active]="arrayData.active.includes($index)"
-				[class.highlight]="arrayData.highlight.includes($index)"
-				[class.completed]="arrayData.completed.includes($index)">
-				<span class="cell-val">{{ val }}</span>
-				<span class="cell-idx">{{ $index }}</span>
+<!-- 4. DEFAULT ARRAY VIEW (Sorting / Searching using Indices) -->
+@else {
+<div class="mini-array">
+	@for (val of arrayData.arr; track $index) {
+	<div class="array-cell" [class.active]="arrayData.active.includes($index)"
+		[class.highlight]="arrayData.highlight.includes($index)"
+		[class.completed]="arrayData.completed.includes($index)">
+		<span class="cell-val">{{ val }}</span>
+		<span class="cell-idx">{{ $index }}</span>
 
-				@if (arrayData.active.includes($index)) {
-				<span class="pointer-tag">active</span>
-				}
-			</div>
-			}
-		</div>
+		@if (arrayData.active.includes($index)) {
+		<span class="pointer-tag">active</span>
 		}
 	</div>
+	}
 </div>
+}
