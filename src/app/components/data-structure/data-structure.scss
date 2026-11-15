@@ -59,30 +59,33 @@
 
 .mini-array {
 	display: flex;
-	gap: 0.5rem;
-	height: 80%;
+	gap: 0.4rem;
+	height: 79%;
 	flex-wrap: wrap;
 	overflow: auto;
 }
 
 .array-cell {
-	background: #27273a;
-	border: 1px solid #3f3f56;
-	padding: 6px 8px;
+	background: #191919;
+	border: 1px solid #363637;
+	padding: 5px;
 	border-radius: 4px;
 	text-align: center;
 	min-width: 32px;
 	position: relative;
 }
-.array-cell.active {
+
+.active {
 	border-color: #ec4899;
 	background: rgba(236, 72, 153, 0.15);
 }
-.array-cell.highlight {
+
+.highlight {
 	border-color: #f59e0b;
 	background: rgba(245, 158, 11, 0.15);
 }
-.array-cell.completed {
+
+.completed {
 	border-color: #10b981;
 	background: rgba(16, 185, 129, 0.15);
 }
@@ -97,6 +100,7 @@
 	font-size: 10px;
 	color: #94a3b8;
 }
+
 .pointer-tag {
 	position: absolute;
 	bottom: -18px;
@@ -109,6 +113,7 @@
 	border-radius: 2px;
 	white-space: nowrap;
 }
+
 .text-muted {
 	color: #64748b;
 	font-size: 12px;
