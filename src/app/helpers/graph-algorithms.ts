@@ -191,11 +191,7 @@ export function generateAStarSteps(grid: GridNode[][]) {
 
 			curr.isVisited = true;
 
-			// Snapshot openSet items with computed fCost/distance
-			const pqSnapshot = openSet.map(n => ({
-				id: `${n.row},${n.col}`,
-				cost: n.distance + getManhattanDistance(n, targetNode)
-			}));
+			const pqSnapshot = openSet.map(n => ({ id: `${n.row},${n.col}`, cost: n.distance + getManhattanDistance(n, targetNode) }));
 
 			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { priorityQueue: pqSnapshot });
 
@@ -212,3 +208,7 @@ export function generateAStarSteps(grid: GridNode[][]) {
 		}
 	});
 }
+
+/**
+ * to do: fix the steps tracking in the data structure.
+ */
