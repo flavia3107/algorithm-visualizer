@@ -7,6 +7,9 @@ export interface VisualizationStep<T = any> {
 	highlightIndices?: number[];
 	completedIndices?: number[];
 	description: string;
+	queue?: any;
+	stack?: any;
+	priorityQueue?: any;
 }
 
 export const COMPLEXITY_CONFIG: ('best' | 'average' | 'worst')[] = ['best', 'average', 'worst'];

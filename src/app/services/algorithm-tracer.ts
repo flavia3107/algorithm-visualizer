@@ -20,14 +20,14 @@ export class AlgorithmTracer {
 
   public graphState = computed(() => {
     const step = this._algorithmService.currentStep();
-    if (!step || Array.isArray(step.data)) {
+    if (!step) {
       return { queue: [], stack: [], priorityQueue: [] };
     }
 
     return {
-      queue: step.data?.queue ?? [],
-      stack: step.data?.stack ?? [],
-      priorityQueue: step.data?.priorityQueue ?? []
+      queue: step.queue ?? [],
+      stack: step.stack ?? [],
+      priorityQueue: step.priorityQueue ?? []
     };
   });
 }

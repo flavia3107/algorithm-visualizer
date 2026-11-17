@@ -48,7 +48,7 @@ function runSearchAlgorithm(
 			grid: GridNode[][];
 			startNode: GridNode;
 			targetNode: GridNode;
-			pushStep: (type: VisualizationStep<GridNode[][]>['type'], desc: string) => void;
+			pushStep: (type: VisualizationStep<GridNode[][]>['type'], desc: string, extra?: { queue?: any[]; stack?: any[]; priorityQueue?: any[] }) => void;
 			markPath: (target: GridNode, msg?: string) => void;
 		}
 	) => void
@@ -59,8 +59,19 @@ function runSearchAlgorithm(
 
 	if (!startNode || !targetNode) return steps;
 
-	const pushStep = (type: VisualizationStep<GridNode[][]>['type'], description: string) =>
-		steps.push({ type, data: cloneGrid(grid), description });
+	const pushStep = (
+		type: VisualizationStep<GridNode[][]>['type'],
+		description: string,
+		extra?: { queue?: any[]; stack?: any[]; priorityQueue?: any[] }
+	) =>
+		steps.push({
+			type,
+			data: cloneGrid(grid),
+			description,
+			queue: extra?.queue ?? [],
+			stack: extra?.stack ?? [],
+			priorityQueue: extra?.priorityQueue ?? []
+		});
 
 	const markPath = (curr: GridNode, successMsg = 'Shortest path found!') => {
 		for (let p: GridNode | null = curr; p; p = p.previousNode) {
@@ -92,7 +103,13 @@ export function generateDijkstraSteps(grid: GridNode[][]) {
 			if (curr.distance === Infinity) return;
 
 			curr.isVisited = true;
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
+
+			// Snapshot unvisited nodes with finite distance as priority queue items
+			const pqSnapshot = unvisited
+				.filter(n => !n.isVisited && n.distance !== Infinity)
+				.map(n => ({ id: `${n.row},${n.col}`, cost: n.distance }));
+
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { priorityQueue: pqSnapshot });
 
 			if (curr === targetNode) return markPath(curr);
 
@@ -114,7 +131,10 @@ export function generateBFSSteps(grid: GridNode[][]) {
 
 		while (queue.length > 0) {
 			const curr = queue.shift()!;
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
+
+			// Snapshot current queue node coordinates/labels
+			const queueSnapshot = queue.map(n => `${n.row},${n.col}`);
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { queue: queueSnapshot });
 
 			if (curr === targetNode) return markPath(curr);
 
@@ -136,7 +156,10 @@ export function generateDFSSteps(grid: GridNode[][]) {
 			if (curr.isVisited || curr.isWall) continue;
 
 			curr.isVisited = true;
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
+
+			// Snapshot current stack node coordinates/labels
+			const stackSnapshot = stack.map(n => `${n.row},${n.col}`);
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { stack: stackSnapshot });
 
 			if (curr === targetNode) return markPath(curr, 'Path found (DFS does not guarantee shortest path)!');
 
@@ -167,7 +190,14 @@ export function generateAStarSteps(grid: GridNode[][]) {
 			if (curr.distance === Infinity) return;
 
 			curr.isVisited = true;
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`);
+
+			// Snapshot openSet items with computed fCost/distance
+			const pqSnapshot = openSet.map(n => ({
+				id: `${n.row},${n.col}`,
+				cost: n.distance + getManhattanDistance(n, targetNode)
+			}));
+
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { priorityQueue: pqSnapshot });
 
 			if (curr === targetNode) return markPath(curr, 'Shortest path found using A*!');
 
