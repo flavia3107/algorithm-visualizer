@@ -13,12 +13,4 @@ export class DataStructure {
   readonly activeAlgorithmId = this._algorithmService.activeView;
   readonly activeGraph = this._algorithmTracer.graphState;
   readonly activeArrayData = this._algorithmTracer.arrayState;
-
-  getPanelTitle(): string {
-    const id = this.activeAlgorithmId();
-    // if (id === 'breadth_first_search') return 'Queue (FIFO)';
-    // if (id === 'depth_first_search') return 'Stack (LIFO)';
-    // if (id === 'dijkstra' || id === 'a_star') return 'Min-Priority Queue';
-    return 'Array Elements & Index Pointers';
-  }
 }
