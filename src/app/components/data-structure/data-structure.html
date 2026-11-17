@@ -4,12 +4,12 @@
 
 <!-- 1. QUEUE VIEW (BFS) -->
 @if (algorithmId === 'breadth_first_search') {
-<div class="queue-row">
+<div class="queue-row flex-row middle">
 	@if (graph.queue.length === 0) {
 	<span class="text-muted">Queue is empty</span>
 	} @else {
 	@for (node of graph.queue; track $index) {
-	<div class="ds-node">
+	<div class="ds-node flex-row middle">
 		<span class="node-badge">{{ node }}</span>
 		@if ($index < graph.queue.length - 1) { <span class="arrow">➔</span>
 			}
@@ -21,7 +21,7 @@
 
 <!-- 2. STACK VIEW (DFS) -->
 @else if (algorithmId === 'depth_first_search') {
-<div class="stack-col">
+<div class="stack-col flex-column-reverse">
 	@if (graph.stack.length === 0) {
 	<span class="text-muted">Stack is empty</span>
 	} @else {
@@ -36,12 +36,12 @@
 
 <!-- 3. PRIORITY QUEUE VIEW (Dijkstra / A*) -->
 @else if (algorithmId === 'dijkstra' || algorithmId === 'a_star') {
-<div class="pq-list">
+<div class="pq-list flex-column">
 	@if (graph.priorityQueue.length === 0) {
 	<span class="text-muted">Open set is empty</span>
 	} @else {
 	@for (item of graph.priorityQueue; track $index) {
-	<div class="pq-item">
+	<div class="pq-item flex-row space-between">
 		<span class="node-id">Node {{ item.id }}</span>
 		<span class="node-cost">Cost: {{ item.cost }}</span>
 	</div>
@@ -52,7 +52,7 @@
 
 <!-- 4. DEFAULT ARRAY VIEW (Sorting / Searching using Indices) -->
 @else {
-<div class="mini-array">
+<div class="mini-array flex-row wrap">
 	@for (val of arrayData.arr; track $index) {
 	<div class="array-cell" [class.active]="arrayData.active.includes($index)"
 		[class.highlight]="arrayData.highlight.includes($index)"
