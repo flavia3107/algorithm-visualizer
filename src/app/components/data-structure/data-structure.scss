@@ -60,9 +60,10 @@
 .mini-array {
 	display: flex;
 	gap: 0.4rem;
-	height: 79%;
+	height: 67%;
 	flex-wrap: wrap;
 	overflow: auto;
+	padding-bottom: 1rem;
 }
 
 .array-cell {
@@ -95,6 +96,7 @@
 	font-weight: bold;
 	font-size: 13px;
 }
+
 .cell-idx {
 	display: block;
 	font-size: 10px;
@@ -112,6 +114,7 @@
 	padding: 1px 4px;
 	border-radius: 2px;
 	white-space: nowrap;
+	z-index: 1;
 }
 
 .text-muted {
