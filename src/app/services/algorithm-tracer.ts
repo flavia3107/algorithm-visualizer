@@ -18,16 +18,21 @@ export class AlgorithmTracer {
     };
   });
 
-  public graphState = computed(() => {
-    const step = this._algorithmService.currentStep();
-    if (!step) {
-      return { queue: [], stack: [], priorityQueue: [] };
+  public graphDisplayNodes = computed(() => {
+    const algoId = this._algorithmService.activeView().id;
+    const graph = this.activeGraph();
+
+    const frontierNodes: string[] =
+      algoId === 'breadth_first_search'
+        ? graph.queue
+        : algoId === 'depth_first_search'
+          ? graph.stack
+          : graph.priorityQueue.map((item: { id: string; cost: number }) => item.id);
+
+    if (graph.isDone) {
+      return graph.selectedNodes;
     }
 
-    return {
-      queue: step.queue ?? [],
-      stack: step.stack ?? [],
-      priorityQueue: step.priorityQueue ?? []
-    };
+    return frontierNodes.length > 0 ? frontierNodes : graph.selectedNodes;
   });
 }

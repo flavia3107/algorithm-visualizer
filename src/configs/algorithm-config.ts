@@ -10,6 +10,8 @@ export interface VisualizationStep<T = any> {
 	queue?: any;
 	stack?: any;
 	priorityQueue?: any;
+	selectedNodes?: string[]
+
 }
 
 export const COMPLEXITY_CONFIG: ('best' | 'average' | 'worst')[] = ['best', 'average', 'worst'];
