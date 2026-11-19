@@ -43,24 +43,22 @@ function getNeighbors(grid: GridNode[][], node: GridNode): GridNode[] {
 function runSearchAlgorithm(
 	initialGrid: GridNode[][],
 	algoName: string,
-	executeSearch: (
-		ctx: {
-			grid: GridNode[][];
-			startNode: GridNode;
-			targetNode: GridNode;
-			pushStep: (
-				type: VisualizationStep<GridNode[][]>['type'],
-				desc: string,
-				extra?: {
-					queue?: any[];
-					stack?: any[];
-					priorityQueue?: any[];
-					selectedNode?: string;
-				}
-			) => void;
-			markPath: (target: GridNode, msg?: string) => void;
-		}
-	) => void
+	executeSearch: (ctx: {
+		grid: GridNode[][];
+		startNode: GridNode;
+		targetNode: GridNode;
+		pushStep: (
+			type: VisualizationStep<GridNode[][]>['type'],
+			desc: string,
+			extra?: {
+				queue?: string[];
+				stack?: string[];
+				priorityQueue?: { id: string; cost: number }[];
+				selectedNode?: string;
+			}
+		) => void;
+		markPath: (target: GridNode, msg?: string) => void;
+	}) => void
 ): VisualizationStep<GridNode[][]>[] {
 	const steps: VisualizationStep<GridNode[][]>[] = [];
 	const grid = cloneGrid(initialGrid);
@@ -74,9 +72,9 @@ function runSearchAlgorithm(
 		type: VisualizationStep<GridNode[][]>['type'],
 		description: string,
 		extra?: {
-			queue?: any[];
-			stack?: any[];
-			priorityQueue?: any[];
+			queue?: string[];
+			stack?: string[];
+			priorityQueue?: { id: string; cost: number }[];
 			selectedNode?: string;
 		}
 	) => {
