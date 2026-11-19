@@ -1,24 +1,25 @@
 @let algorithmId = activeAlgorithmId().id;
 @let arrayData = activeArrayData();
-@let displayNodes = graphDisplayNodes();
+@let gState = activeGraph();
 @let isGraphAlgo = algorithmId === 'breadth_first_search' || algorithmId === 'depth_first_search' || algorithmId ===
 'dijkstra' || algorithmId === 'a_star';
 
 @if (isGraphAlgo) {
 <div class="queue-row flex-row middle wrap">
-	@if (displayNodes.length === 0) {
+	@if (gState.selectedNodes.length === 0) {
 	<span class="text-muted">No nodes selected yet</span>
 	} @else {
-	@for (node of displayNodes; track $index) {
+	@for (node of gState.selectedNodes; track $index) {
 	<div class="ds-node flex-row middle">
 		<span class="node-badge">{{ node }}</span>
-		@if ($index < displayNodes.length - 1) { <span class="arrow">➔</span>
+		@if ($index < gState.selectedNodes.length - 1) { <span class="arrow">➔</span>
 			}
 	</div>
 	}
 	}
 </div>
 } @else {
+<!-- DEFAULT ARRAY VIEW (Sorting / Searching using Indices) -->
 <div class="mini-array flex-row wrap">
 	@for (val of arrayData.arr; track $index) {
 	<div class="array-cell" [class.active]="arrayData.active.includes($index)"

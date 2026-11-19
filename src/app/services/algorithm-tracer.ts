@@ -18,21 +18,22 @@ export class AlgorithmTracer {
     };
   });
 
-  public graphDisplayNodes = computed(() => {
-    const algoId = this._algorithmService.activeView().id;
-    const graph = this.activeGraph();
-
-    const frontierNodes: string[] =
-      algoId === 'breadth_first_search'
-        ? graph.queue
-        : algoId === 'depth_first_search'
-          ? graph.stack
-          : graph.priorityQueue.map((item: { id: string; cost: number }) => item.id);
-
-    if (graph.isDone) {
-      return graph.selectedNodes;
+  public graphState = computed(() => {
+    const step = this._algorithmService.currentStep();
+    if (!step) {
+      return {
+        queue: [] as string[],
+        stack: [] as string[],
+        priorityQueue: [] as { id: string; cost: number }[],
+        selectedNodes: [] as string[],
+      };
     }
 
-    return frontierNodes.length > 0 ? frontierNodes : graph.selectedNodes;
+    return {
+      queue: step.queue ?? [],
+      stack: step.stack ?? [],
+      priorityQueue: step.priorityQueue ?? [],
+      selectedNodes: step.selectedNodes ?? [],
+    };
   });
 }
