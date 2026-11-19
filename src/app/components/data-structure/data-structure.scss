@@ -3,12 +3,20 @@
 	gap: 0.5rem;
 }
 
+.queue-row {
+	height: calc(100% - 2.5rem);
+	overflow: auto;
+	margin-left: 0.5rem;
+}
+
 .node-badge {
-	background: #3b82f6;
+	background: #1c1c1c;
 	padding: 4px 8px;
 	border-radius: 4px;
 	font-weight: bold;
 	font-size: 12px;
+	border: 1px solid #414141;
+	box-sizing: border-box;
 }
 
 .arrow {
