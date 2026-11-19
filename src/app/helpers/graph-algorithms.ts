@@ -40,6 +40,14 @@ function getNeighbors(grid: GridNode[][], node: GridNode): GridNode[] {
 	].filter((n): n is GridNode => Boolean(n && !n.isVisited && !n.isWall));
 }
 
+function getNodeChain(node: GridNode | null): string[] {
+	const chain: string[] = [];
+	for (let p = node; p; p = p.previousNode) {
+		chain.push(`${p.row},${p.col}`);
+	}
+	return chain.reverse();
+}
+
 function runSearchAlgorithm(
 	initialGrid: GridNode[][],
 	algoName: string,
@@ -54,7 +62,7 @@ function runSearchAlgorithm(
 				queue?: string[];
 				stack?: string[];
 				priorityQueue?: { id: string; cost: number }[];
-				selectedNode?: string;
+				currentNode?: GridNode | null;
 			}
 		) => void;
 		markPath: (target: GridNode, msg?: string) => void;
@@ -66,7 +74,7 @@ function runSearchAlgorithm(
 
 	if (!startNode || !targetNode) return steps;
 
-	const selectedNodes: string[] = [];
+	let latestSelectedNodes: string[] = [];
 
 	const pushStep = (
 		type: VisualizationStep<GridNode[][]>['type'],
@@ -75,11 +83,11 @@ function runSearchAlgorithm(
 			queue?: string[];
 			stack?: string[];
 			priorityQueue?: { id: string; cost: number }[];
-			selectedNode?: string;
+			currentNode?: GridNode | null;
 		}
 	) => {
-		if (extra?.selectedNode && !selectedNodes.includes(extra.selectedNode)) {
-			selectedNodes.push(extra.selectedNode);
+		if (extra?.currentNode) {
+			latestSelectedNodes = getNodeChain(extra.currentNode);
 		}
 
 		steps.push({
@@ -89,7 +97,7 @@ function runSearchAlgorithm(
 			queue: extra?.queue ?? [],
 			stack: extra?.stack ?? [],
 			priorityQueue: extra?.priorityQueue ?? [],
-			selectedNodes: [...selectedNodes],
+			selectedNodes: [...latestSelectedNodes],
 		});
 	};
 
@@ -97,14 +105,23 @@ function runSearchAlgorithm(
 		for (let p: GridNode | null = curr; p; p = p.previousNode) {
 			p.isPath = true;
 		}
-		pushStep('path-found', successMsg);
+		latestSelectedNodes = getNodeChain(curr);
+		pushStep('path-found', successMsg, { currentNode: curr });
 	};
 
 	pushStep('info', `Grid initialized for ${algoName}.`);
 	executeSearch({ grid, startNode, targetNode, pushStep, markPath });
 
 	if (steps[steps.length - 1]?.type !== 'path-found') {
-		pushStep('info', 'Target is unreachable.');
+		steps.push({
+			type: 'info',
+			data: cloneGrid(grid),
+			description: 'Target is unreachable.',
+			queue: [],
+			stack: [],
+			priorityQueue: [],
+			selectedNodes: [...latestSelectedNodes],
+		});
 	}
 
 	return steps;
@@ -123,15 +140,11 @@ export function generateDijkstraSteps(grid: GridNode[][]) {
 			if (curr.distance === Infinity) return;
 
 			curr.isVisited = true;
-
 			const pqSnapshot = unvisited
 				.filter(n => !n.isVisited && n.distance !== Infinity)
 				.map(n => ({ id: `${n.row},${n.col}`, cost: n.distance }));
 
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, {
-				priorityQueue: pqSnapshot,
-				selectedNode: `${curr.row},${curr.col}`,
-			});
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { priorityQueue: pqSnapshot, currentNode: curr });
 
 			if (curr === targetNode) return markPath(curr);
 
@@ -155,10 +168,7 @@ export function generateBFSSteps(grid: GridNode[][]) {
 			const curr = queue.shift()!;
 			const queueSnapshot = queue.map(n => `${n.row},${n.col}`);
 
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, {
-				queue: queueSnapshot,
-				selectedNode: `${curr.row},${curr.col}`,
-			});
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { queue: queueSnapshot, currentNode: curr });
 
 			if (curr === targetNode) return markPath(curr);
 
@@ -181,11 +191,7 @@ export function generateDFSSteps(grid: GridNode[][]) {
 
 			curr.isVisited = true;
 			const stackSnapshot = stack.map(n => `${n.row},${n.col}`);
-
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, {
-				stack: stackSnapshot,
-				selectedNode: `${curr.row},${curr.col}`,
-			});
+			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { stack: stackSnapshot, currentNode: curr });
 
 			if (curr === targetNode) return markPath(curr, 'Path found (DFS does not guarantee shortest path)!');
 
@@ -216,15 +222,11 @@ export function generateAStarSteps(grid: GridNode[][]) {
 			if (curr.distance === Infinity) return;
 
 			curr.isVisited = true;
-
-			const pqSnapshot = openSet.map(n => ({
-				id: `${n.row},${n.col}`,
-				cost: n.distance + getManhattanDistance(n, targetNode),
-			}));
+			const pqSnapshot = openSet.map(n => ({ id: `${n.row},${n.col}`, cost: n.distance + getManhattanDistance(n, targetNode) }));
 
 			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, {
 				priorityQueue: pqSnapshot,
-				selectedNode: `${curr.row},${curr.col}`,
+				currentNode: curr
 			});
 
 			if (curr === targetNode) return markPath(curr, 'Shortest path found using A*!');
@@ -240,7 +242,3 @@ export function generateAStarSteps(grid: GridNode[][]) {
 		}
 	});
 }
-
-/**
- * to do: fix the steps tracking in the data structure.
- */
