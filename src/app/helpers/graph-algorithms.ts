@@ -43,7 +43,7 @@ function getNeighbors(grid: GridNode[][], node: GridNode): GridNode[] {
 function getNodeChain(node: GridNode | null): string[] {
 	const chain: string[] = [];
 	for (let p = node; p; p = p.previousNode) {
-		chain.push(`${p.row},${p.col}`);
+		chain.push(`${p.row + 1},${p.col + 1}`);
 	}
 	return chain.reverse();
 }
@@ -144,7 +144,7 @@ export function generateDijkstraSteps(grid: GridNode[][]) {
 				.filter(n => !n.isVisited && n.distance !== Infinity)
 				.map(n => ({ id: `${n.row},${n.col}`, cost: n.distance }));
 
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { priorityQueue: pqSnapshot, currentNode: curr });
+			pushStep('visit', `Visited node at (${curr.row + 1}, ${curr.col + 1}).`, { priorityQueue: pqSnapshot, currentNode: curr });
 
 			if (curr === targetNode) return markPath(curr);
 
@@ -168,7 +168,7 @@ export function generateBFSSteps(grid: GridNode[][]) {
 			const curr = queue.shift()!;
 			const queueSnapshot = queue.map(n => `${n.row},${n.col}`);
 
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { queue: queueSnapshot, currentNode: curr });
+			pushStep('visit', `Visited node at (${curr.row + 1}, ${curr.col + 1}).`, { queue: queueSnapshot, currentNode: curr });
 
 			if (curr === targetNode) return markPath(curr);
 
@@ -191,7 +191,7 @@ export function generateDFSSteps(grid: GridNode[][]) {
 
 			curr.isVisited = true;
 			const stackSnapshot = stack.map(n => `${n.row},${n.col}`);
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, { stack: stackSnapshot, currentNode: curr });
+			pushStep('visit', `Visited node at (${curr.row + 1}, ${curr.col + 1}).`, { stack: stackSnapshot, currentNode: curr });
 
 			if (curr === targetNode) return markPath(curr, 'Path found (DFS does not guarantee shortest path)!');
 
@@ -224,7 +224,7 @@ export function generateAStarSteps(grid: GridNode[][]) {
 			curr.isVisited = true;
 			const pqSnapshot = openSet.map(n => ({ id: `${n.row},${n.col}`, cost: n.distance + getManhattanDistance(n, targetNode) }));
 
-			pushStep('visit', `Visited node at (${curr.row}, ${curr.col}).`, {
+			pushStep('visit', `Visited node at (${curr.row + 1}, ${curr.col + 1}).`, {
 				priorityQueue: pqSnapshot,
 				currentNode: curr
 			});
