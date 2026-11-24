@@ -30,13 +30,6 @@
 	overflow-y: auto;
 }
 
-.ds-node-block {
-	background: #8b5cf6;
-	padding: 4px 8px;
-	border-radius: 4px;
-	font-size: 12px;
-}
-
 .pq-list {
 	gap: 4px;
 	width: 100%;
@@ -70,8 +63,8 @@
 }
 
 .active {
-	border-color: #ec4899;
-	background: rgba(236, 72, 153, 0.15);
+	border-color: $active;
+	background: $active-bg;
 }
 
 .highlight {
