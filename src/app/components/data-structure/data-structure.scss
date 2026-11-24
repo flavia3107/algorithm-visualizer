@@ -12,17 +12,17 @@
 }
 
 .node-badge {
-	background: #1c1c1c;
+	background: $bg-gray-black;
 	padding: 4px 8px;
 	border-radius: 4px;
 	font-weight: bold;
 	font-size: 12px;
-	border: 1px solid #414141;
+	border: 1px solid $border-color;
 	box-sizing: border-box;
 }
 
 .arrow {
-	color: #64748b;
+	color: $subtitle-text-color;
 }
 
 .mini-array {
