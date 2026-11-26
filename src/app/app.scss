@@ -33,12 +33,12 @@
 	font-size: 0.7rem;
 	font-weight: 900;
 	letter-spacing: 2.5px;
-	color: #a1a1a1;
+	color: $subtitle-text-color;
 }
 
 .algorithm-title {
 	font-size: 1.7rem;
-	color: #f8f8f8;
+	color: $main-text-color;
 	letter-spacing: 1.25px;
 	font-family: sans-serif;
 	margin-top: -0.75rem;
