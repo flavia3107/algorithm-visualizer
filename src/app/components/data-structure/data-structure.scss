@@ -66,7 +66,7 @@
 .cell-idx {
 	display: block;
 	font-size: 10px;
-	color: #94a3b8;
+	color: $subtitle-text-color;
 }
 
 .pointer-tag {
@@ -74,8 +74,8 @@
 	bottom: -18px;
 	left: 50%;
 	transform: translateX(-50%);
-	background: #ec4899;
-	color: white;
+	background: $active;
+	color: $main-text-color;
 	font-size: 9px;
 	padding: 1px 4px;
 	border-radius: 2px;
@@ -84,7 +84,7 @@
 }
 
 .text-muted {
-	color: #64748b;
+	color: $subtitle-text-color;
 	font-size: 12px;
 	font-style: italic;
 }
