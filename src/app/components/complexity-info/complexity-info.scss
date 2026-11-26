@@ -1,3 +1,5 @@
+@use '../../../styles/color-variables' as *;
+
 h5 {
 	text-transform: uppercase;
 	letter-spacing: 1px;
@@ -23,7 +25,7 @@ h5 {
 }
 
 .value {
-	color: #09cece;
+	color: $prime-text-color;
 	font-size: 0.8rem;
 }
 

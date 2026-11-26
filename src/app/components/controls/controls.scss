@@ -1,3 +1,5 @@
+@use '../../../styles/color-variables' as *;
+
 .summary {
 	margin-bottom: 0.5rem;
 	width: 40%;
@@ -5,7 +7,7 @@
 
 .description {
 	font-size: 0.8rem;
-	color: #d3d3d3;
+	color: $grayish-text-color;
 	margin-top: 0.35rem;
 	letter-spacing: 1px;
 }
@@ -28,14 +30,14 @@
 	height: 4px;
 	background: #3f3f46;
 	border-radius: 2px;
-	accent-color: #09cece;
+	accent-color: $prime-text-color;
 	cursor: pointer;
 }
 
 .speed-value {
 	font-size: 12px;
 	font-family: monospace;
-	color: #d3d3d3;
+	color: $grayish-text-color;
 	min-width: 42px;
 	text-align: right;
 }
