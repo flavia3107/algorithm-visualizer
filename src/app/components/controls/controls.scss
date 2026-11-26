@@ -22,13 +22,12 @@
 
 .speed-icon {
 	font-size: 18px;
-	color: #a0a0ab;
+	color: $button-icon;
 }
 
 .speed-range {
 	width: 90px;
 	height: 4px;
-	background: #3f3f46;
 	border-radius: 2px;
 	accent-color: $prime-text-color;
 	cursor: pointer;

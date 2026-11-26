@@ -27,7 +27,7 @@ ol {
 
 li {
 	font-size: 0.85rem;
-	color: #d3d3d3;
+	color: $grayish-text-color;
 	margin-bottom: 0.5rem;
 }
 
@@ -40,5 +40,5 @@ li {
 	padding: 0.5rem;
 	margin: 0 0.5rem;
 	gap: 0.1rem;
-	color: #d3d3d3;
+	color: $grayish-text-color;
 }
