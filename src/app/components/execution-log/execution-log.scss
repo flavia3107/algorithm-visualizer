@@ -20,7 +20,7 @@
 
 p {
 	font-size: 0.9rem;
-	color: #d3d3d3;
+	color: $grayish-text-color;
 	margin: 0.2rem 0;
 	opacity: 0.5;
 }
@@ -30,7 +30,7 @@ p:first-of-type {
 }
 
 p.active {
-	color: #00f2ff;
+	color: $prime-text-color;
 	opacity: 1;
 }
 
@@ -49,6 +49,6 @@ p.active {
 
 .final {
 	font-size: 1rem;
-	color: #fff;
+	color: $white;
 	opacity: 1;
 }
