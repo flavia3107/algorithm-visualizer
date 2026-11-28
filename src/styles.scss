@@ -92,6 +92,12 @@ body {
 		font-size: 1.3rem;
 		color: $button-icon;
 	}
+
+	&:hover {
+		border: 1.5px solid $border-color;
+		box-shadow: 0px 0px 4px 2px $bg-medium-gray;
+		-webkit-box-shadow: 0px 0px 4px 2px $bg-medium-gray;
+	}
 }
 
 .material-icons-outlined {
